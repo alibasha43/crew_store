@@ -15,19 +15,18 @@
             background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh; margin: 0;
         }
 
-        /* Fixed Navigation Layout */
+        /* Glossy Navigation */
         nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-
-        .glass { background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass { background: rgba(15, 15, 15, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
         
         .nav-links { display: flex; gap: 25px; align-items: center; }
         .nav-links a, .nav-links button { text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; background: none; border: none; cursor: pointer; }
         
-        .dropdown { position: relative; padding: 30px 0; } /* Padding creates a hover bridge */
+        .dropdown { position: relative; padding: 30px 0; }
         .dropdown-menu { 
             display: none; position: absolute; top: 80px; left: 0; 
-            background: #0f0f0f; border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); 
             min-width: 220px; border-radius: 12px; padding: 10px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .dropdown:hover .dropdown-menu { display: block; }
@@ -36,12 +35,18 @@
 
         .search-container { position: relative; width: 220px; }
         .search-container input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px; }
-        .search-container i { position: absolute; left: 15px; top: 10px; color: #555; }
+        .search-container i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #3b82f6; width: 16px; height: 16px; }
 
         .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
         
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        
+        /* Filters & Pagination */
+        .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .filter-btn:hover { background: #2563eb; border-color: #2563eb; }
+        .page-btn { padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .page-btn.active { background: #2563eb; border-color: #2563eb; }
     </style>
 </head>
 <body>
@@ -57,7 +62,6 @@
 
             <div class="nav-links">
                 <a href="#" onclick="showPage('home')">HOME</a>
-                
                 <div class="dropdown">
                     <button>GAMES <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
@@ -66,7 +70,6 @@
                         <a href="#" onclick="loadConfig('pc_games')">PC / Steam Games</a>
                     </div>
                 </div>
-
                 <div class="dropdown">
                     <button>SUBSCRIPTIONS <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
@@ -75,7 +78,6 @@
                         <a href="#" onclick="loadConfig('pc_subs')">PC Subscriptions</a>
                     </div>
                 </div>
-
                 <div class="dropdown">
                     <button>GIFT CARDS <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
@@ -87,7 +89,7 @@
             </div>
 
             <div class="search-container">
-                <i data-lucide="search" class="w-4 h-4"></i>
+                <i data-lucide="search"></i>
                 <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store...">
             </div>
         </div>
@@ -99,35 +101,79 @@
                 <h1 class="text-7xl md:text-8xl font-black mb-4 uppercase tracking-tighter">CREW <span class="text-blue-500">STORE</span></h1>
                 <p class="text-gray-500 text-lg uppercase tracking-widest font-bold mb-12">Premium Digital Assets</p>
             </div>
-            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-24"></div>
+            
+            <section class="mb-20">
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">Random Games</h2>
+                <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+            </section>
+
+            <section class="mb-20">
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">Random Subscriptions</h2>
+                <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+            </section>
+
+            <section class="mb-20">
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">Random Gift Cards</h2>
+                <div id="random-cards-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10"></div>
+            </section>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
-            <div class="flex items-center gap-6 mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                 <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500"></h2>
-                <div class="h-[1px] bg-white/10 flex-grow"></div>
+                
+                <div class="flex gap-4">
+                    <button class="filter-btn" onclick="sortItems('name')">Sort A-Z</button>
+                    <button class="filter-btn" onclick="sortItems('price-low')">Price: Low-High</button>
+                    <button class="filter-btn" onclick="sortItems('price-high')">Price: High-Low</button>
+                </div>
             </div>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-32"></div>
+            
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
+            
+            <div id="pagination" class="flex justify-center gap-4 pb-32"></div>
         </div>
     </div>
 
+    <footer class="glass border-t border-white/10 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start gap-2">
+                <span class="text-2xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
+                <p class="text-gray-500 text-sm">Official Gaming Digital Marketplace © 2026</p>
+            </div>
+            <div class="flex gap-8 font-bold text-xs uppercase tracking-widest text-gray-400">
+                <a href="#" class="hover:text-blue-500">Terms</a>
+                <a href="#" class="hover:text-blue-500">Privacy</a>
+                <a href="#" class="hover:text-blue-500">Contact</a>
+            </div>
+            <div class="flex gap-4">
+                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10 hover:border-blue-500 cursor-pointer transition">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </div>
+                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10 hover:border-blue-500 cursor-pointer transition">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // --- CONFIGURATION: PUT YOUR UNIQUE SHEET IDs HERE ---
         const STORE_CONFIG = {
             'ps_games':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'PlayStation Games' },
-            'xbox_games': { id: 'YOUR_ID_2', tab: 'Games', title: 'Xbox Games' },
-            'pc_games':   { id: 'YOUR_ID_3', tab: 'Games', title: 'PC Games' },
-            
-            'ps_subs':    { id: 'YOUR_ID_4', tab: 'Subscriptions', title: 'PS Plus' },
-            'xbox_subs':  { id: 'YOUR_ID_5', tab: 'Subscriptions', title: 'Game Pass' },
-            'pc_subs':    { id: 'YOUR_ID_6', tab: 'Subscriptions', title: 'PC Subs' },
-            
-            'ps_cards':   { id: 'YOUR_ID_7', tab: 'GiftCards', title: 'PSN Cards' },
-            'xbox_cards': { id: 'YOUR_ID_8', tab: 'GiftCards', title: 'Xbox Cards' },
-            'pc_cards':   { id: 'YOUR_ID_9', tab: 'GiftCards', title: 'Steam Cards' }
+            'xbox_games': { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'Xbox Games' },
+            'pc_games':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'PC Games' },
+            'ps_subs':    { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Subscriptions', title: 'PS Plus' },
+            'xbox_subs':  { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Subscriptions', title: 'Game Pass' },
+            'pc_subs':    { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Subscriptions', title: 'PC Subs' },
+            'ps_cards':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'GiftCards', title: 'PSN Cards' },
+            'xbox_cards': { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'GiftCards', title: 'Xbox Cards' },
+            'pc_cards':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'GiftCards', title: 'Steam Cards' }
         };
 
         const WHATSAPP_NUMBER = '964000000000';
+        let currentData = [];
+        let currentPage = 1;
+        const itemsPerPage = 24;
 
         async function fetchCSV(sheetId, tabName) {
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
@@ -155,15 +201,17 @@
         function createCard(p) {
             const name = p.name || p.Name || "Item";
             const price = p.price || p.Price || "";
+            const cat = p.category || p.Category || "Standard";
             const img = p.imageurl || p.ImageURL || "https://via.placeholder.com/400";
             return `
                 <div class="product-card p-4">
-                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-5 shadow-xl">
-                    <h3 class="font-bold text-xl leading-tight mb-6 min-h-[60px]">${name}</h3>
+                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-4 shadow-xl">
+                    <h3 class="font-bold text-lg leading-tight mb-1">${name}</h3>
+                    <p class="text-blue-500/60 text-xs font-bold uppercase tracking-widest mb-4">${cat}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-3xl font-black text-blue-500">${price}</span>
+                        <span class="text-2xl font-black text-blue-500">${price}</span>
                         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" 
-                           target="_blank" class="bg-blue-600 p-4 rounded-2xl hover:bg-blue-500 transition neon-blue">
+                           target="_blank" class="bg-blue-600 p-3 rounded-2xl hover:bg-blue-500 transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
@@ -171,32 +219,68 @@
         }
 
         async function loadConfig(key) {
-            const cfg = STORE_CONFIG[key];
             showPage('product');
-            document.getElementById('category-title').innerText = cfg.title;
-            const data = await fetchCSV(cfg.id, cfg.tab);
-            document.getElementById('product-grid').innerHTML = data.map(p => createCard(p)).join('');
+            document.getElementById('category-title').innerText = STORE_CONFIG[key].title;
+            currentData = await fetchCSV(STORE_CONFIG[key].id, STORE_CONFIG[key].tab);
+            currentPage = 1;
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = currentData.slice(start, end);
+            
+            document.getElementById('product-grid').innerHTML = paginatedItems.map(p => createCard(p)).join('');
+            renderPagination();
             lucide.createIcons();
+        }
+
+        function renderPagination() {
+            const pageCount = Math.ceil(currentData.length / itemsPerPage);
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+            
+            if(pageCount <= 1) return;
+
+            for(let i = 1; i <= pageCount; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.onclick = () => { currentPage = i; renderGrid(); window.scrollTo(0, 0); };
+                container.appendChild(btn);
+            }
+        }
+
+        function sortItems(type) {
+            if(type === 'name') currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            if(type === 'price-low') currentData.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            if(type === 'price-high') currentData.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            currentPage = 1;
+            renderGrid();
         }
 
         async function loadHome() {
-            // Pulls random items from your first sheet ID (PlayStation Games)
-            const data = await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games');
-            const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 8);
-            document.getElementById('random-grid').innerHTML = shuffled.map(p => createCard(p)).join('');
+            const games = (await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games')).sort(() => 0.5 - Math.random()).slice(0, 4);
+            const subs = (await fetchCSV(STORE_CONFIG['ps_subs'].id, 'Subscriptions')).sort(() => 0.5 - Math.random()).slice(0, 4);
+            const cards = (await fetchCSV(STORE_CONFIG['ps_cards'].id, 'GiftCards')).sort(() => 0.5 - Math.random()).slice(0, 4);
+            
+            document.getElementById('random-games-grid').innerHTML = games.map(p => createCard(p)).join('');
+            document.getElementById('random-subs-grid').innerHTML = subs.map(p => createCard(p)).join('');
+            document.getElementById('random-cards-grid').innerHTML = cards.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
 
-        async function searchProducts() {
+        function searchProducts() {
             const query = document.getElementById('mainSearch').value.toLowerCase();
             if(query.length < 2) return;
             showPage('product');
             document.getElementById('category-title').innerText = "Search Results";
-            // Searching inside PS Games by default for this example
-            const data = await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games');
-            const filtered = data.filter(p => (p.name || p.Name || "").toLowerCase().includes(query));
-            document.getElementById('product-grid').innerHTML = filtered.map(p => createCard(p)).join('');
-            lucide.createIcons();
+            // Logic to search through games tab as base
+            fetchCSV(STORE_CONFIG['ps_games'].id, 'Games').then(data => {
+                currentData = data.filter(p => (p.name || "").toLowerCase().includes(query));
+                renderGrid();
+            });
         }
 
         function showPage(page) {
