@@ -19,39 +19,38 @@
         nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
 
-        .glass { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass { background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         
-        /* Dropdown Fixes */
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a, .nav-links button { text-decoration: none; color: white; font-weight: 700; font-size: 13px; letter-spacing: 1px; background: none; border: none; cursor: pointer; padding: 10px 0; }
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a, .nav-links button { text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; background: none; border: none; cursor: pointer; }
         
-        .dropdown { position: relative; }
+        .dropdown { position: relative; padding: 30px 0; } /* Padding creates a hover bridge */
         .dropdown-menu { 
-            display: none; position: absolute; top: 100%; left: 0; 
-            background: #111; border: 1px solid rgba(255,255,255,0.1); 
-            min-width: 200px; border-radius: 8px; padding: 10px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none; position: absolute; top: 80px; left: 0; 
+            background: #0f0f0f; border: 1px solid rgba(255,255,255,0.1); 
+            min-width: 220px; border-radius: 12px; padding: 10px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu a { display: block; padding: 10px 20px; text-transform: none; font-weight: 500; transition: 0.2s; }
-        .dropdown-menu a:hover { background: #1d4ed8; color: white; }
+        .dropdown-menu a { display: block; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; }
+        .dropdown-menu a:hover { background: #2563eb; color: white; }
 
-        .search-container { position: relative; width: 250px; }
-        .search-container input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; }
-        .search-container i { position: absolute; left: 15px; top: 10px; color: #666; }
+        .search-container { position: relative; width: 220px; }
+        .search-container input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px; }
+        .search-container i { position: absolute; left: 15px; top: 10px; color: #555; }
 
-        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
         
-        .neon-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
     </style>
 </head>
 <body>
 
     <nav class="glass">
         <div class="nav-container">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue">
-                    <i data-lucide="zap" class="text-white fill-current"></i>
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center neon-blue group-hover:rotate-12 transition">
+                    <i data-lucide="zap" class="text-white fill-current w-5 h-5"></i>
                 </div>
                 <span class="text-xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
             </div>
@@ -60,36 +59,36 @@
                 <a href="#" onclick="showPage('home')">HOME</a>
                 
                 <div class="dropdown">
-                    <button>GAMES <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
+                    <button>GAMES <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('Games', 'PlayStation')">PlayStation Games</a>
-                        <a href="#" onclick="loadCategory('Games', 'Xbox')">Xbox Games</a>
-                        <a href="#" onclick="loadCategory('Games', 'PC')">PC / Steam Games</a>
+                        <a href="#" onclick="loadConfig('ps_games')">PlayStation Games</a>
+                        <a href="#" onclick="loadConfig('xbox_games')">Xbox Games</a>
+                        <a href="#" onclick="loadConfig('pc_games')">PC / Steam Games</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button>SUBSCRIPTIONS <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
+                    <button>SUBSCRIPTIONS <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('Subscriptions', 'PlayStation')">PS Plus</a>
-                        <a href="#" onclick="loadCategory('Subscriptions', 'Xbox')">Game Pass</a>
-                        <a href="#" onclick="loadCategory('Subscriptions', 'PC')">PC Subs</a>
+                        <a href="#" onclick="loadConfig('ps_subs')">PlayStation Plus</a>
+                        <a href="#" onclick="loadConfig('xbox_subs')">Xbox Game Pass</a>
+                        <a href="#" onclick="loadConfig('pc_subs')">PC Subscriptions</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button>GIFT CARDS <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
+                    <button>GIFT CARDS <i data-lucide="chevron-down" class="inline w-3 h-3 ml-1"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('GiftCards', 'PlayStation')">PSN Cards</a>
-                        <a href="#" onclick="loadCategory('GiftCards', 'Xbox')">Xbox Cards</a>
-                        <a href="#" onclick="loadCategory('GiftCards', 'PC')">Steam Cards</a>
+                        <a href="#" onclick="loadConfig('ps_cards')">PSN Gift Cards</a>
+                        <a href="#" onclick="loadConfig('xbox_cards')">Xbox Gift Cards</a>
+                        <a href="#" onclick="loadConfig('pc_cards')">Steam Gift Cards</a>
                     </div>
                 </div>
             </div>
 
             <div class="search-container">
                 <i data-lucide="search" class="w-4 h-4"></i>
-                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search items...">
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store...">
             </div>
         </div>
     </nav>
@@ -97,40 +96,52 @@
     <div id="content" class="pt-32">
         <div id="home-view" class="max-w-7xl mx-auto px-6">
             <div class="text-center py-10">
-                <h1 class="text-7xl font-black mb-4 uppercase">CREW <span class="text-blue-500">STORE</span></h1>
-                <p class="text-gray-500 text-lg uppercase tracking-widest italic mb-10">Featured Daily Deals</p>
+                <h1 class="text-7xl md:text-8xl font-black mb-4 uppercase tracking-tighter">CREW <span class="text-blue-500">STORE</span></h1>
+                <p class="text-gray-500 text-lg uppercase tracking-widest font-bold mb-12">Premium Digital Assets</p>
             </div>
-            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6"></div>
+            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-24"></div>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
-            <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-8"></h2>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6 pb-20"></div>
+            <div class="flex items-center gap-6 mb-12">
+                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500"></h2>
+                <div class="h-[1px] bg-white/10 flex-grow"></div>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-32"></div>
         </div>
     </div>
 
     <script>
-        const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8';
+        // --- CONFIGURATION: PUT YOUR UNIQUE SHEET IDs HERE ---
+        const STORE_CONFIG = {
+            'ps_games':   { id: 'YOUR_ID_1', tab: 'Games', title: 'PlayStation Games' },
+            'xbox_games': { id: 'YOUR_ID_2', tab: 'Games', title: 'Xbox Games' },
+            'pc_games':   { id: 'YOUR_ID_3', tab: 'Games', title: 'PC Games' },
+            
+            'ps_subs':    { id: 'YOUR_ID_4', tab: 'Subscriptions', title: 'PS Plus' },
+            'xbox_subs':  { id: 'YOUR_ID_5', tab: 'Subscriptions', title: 'Game Pass' },
+            'pc_subs':    { id: 'YOUR_ID_6', tab: 'Subscriptions', title: 'PC Subs' },
+            
+            'ps_cards':   { id: 'YOUR_ID_7', tab: 'GiftCards', title: 'PSN Cards' },
+            'xbox_cards': { id: 'YOUR_ID_8', tab: 'GiftCards', title: 'Xbox Cards' },
+            'pc_cards':   { id: 'YOUR_ID_9', tab: 'GiftCards', title: 'Steam Cards' }
+        };
+
         const WHATSAPP_NUMBER = '964000000000';
 
-        async function fetchSheetData(tabName) {
-            // Updated URL to ensure clean CSV fetching
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+        async function fetchCSV(sheetId, tabName) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
             try {
                 const response = await fetch(url);
                 const text = await response.text();
                 return parseCSV(text);
-            } catch (e) {
-                console.error("Error fetching " + tabName, e);
-                return [];
-            }
+            } catch (e) { return []; }
         }
 
         function parseCSV(csv) {
             const lines = csv.split('\n');
             if (lines.length < 2) return [];
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
-            
             return lines.slice(1).map(line => {
                 const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const row = {};
@@ -142,47 +153,36 @@
         }
 
         function createCard(p) {
-            // Handle lowercase/uppercase mismatches automatically
-            const name = p.name || p.Name || "Unknown Game";
-            const price = p.price || p.Price || "0.00";
+            const name = p.name || p.Name || "Item";
+            const price = p.price || p.Price || "";
             const img = p.imageurl || p.ImageURL || "https://via.placeholder.com/400";
-
             return `
                 <div class="product-card p-4">
-                    <img src="${img}" class="w-full h-64 object-cover rounded-xl mb-4 shadow-2xl">
-                    <h3 class="font-bold text-lg leading-tight mb-4 min-h-[50px]">${name}</h3>
+                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-5 shadow-xl">
+                    <h3 class="font-bold text-xl leading-tight mb-6 min-h-[60px]">${name}</h3>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-black text-blue-500">${price}</span>
+                        <span class="text-3xl font-black text-blue-500">${price}</span>
                         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" 
-                           target="_blank" class="bg-blue-600 p-3 rounded-xl hover:bg-blue-500 transition neon-blue">
+                           target="_blank" class="bg-blue-600 p-4 rounded-2xl hover:bg-blue-500 transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
                 </div>`;
         }
 
-        async function loadCategory(tab, platform) {
+        async function loadConfig(key) {
+            const cfg = STORE_CONFIG[key];
             showPage('product');
-            document.getElementById('category-title').innerText = `${platform} ${tab}`;
-            const products = await fetchSheetData(tab);
-            
-            // Filter by platform column
-            const filtered = products.filter(p => {
-                const pValue = (p.platform || p.Platform || "").toLowerCase();
-                return pValue === platform.toLowerCase();
-            });
-
-            document.getElementById('product-grid').innerHTML = filtered.length > 0 
-                ? filtered.map(p => createCard(p)).join('')
-                : `<p class="col-span-full text-center text-gray-500">No products found in the "${tab}" tab with platform "${platform}".</p>`;
+            document.getElementById('category-title').innerText = cfg.title;
+            const data = await fetchCSV(cfg.id, cfg.tab);
+            document.getElementById('product-grid').innerHTML = data.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
 
         async function loadHome() {
-            // Shows random items from your "Games" sheet
-            const products = await fetchSheetData('Games');
-            if(products.length === 0) return;
-            const shuffled = products.sort(() => 0.5 - Math.random()).slice(0, 8);
+            // Pulls random items from your first sheet ID (PlayStation Games)
+            const data = await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games');
+            const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 8);
             document.getElementById('random-grid').innerHTML = shuffled.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
@@ -190,11 +190,11 @@
         async function searchProducts() {
             const query = document.getElementById('mainSearch').value.toLowerCase();
             if(query.length < 2) return;
-            
             showPage('product');
             document.getElementById('category-title').innerText = "Search Results";
-            const products = await fetchSheetData('Games'); // Searches Games tab
-            const filtered = products.filter(p => (p.name || p.Name || "").toLowerCase().includes(query));
+            // Searching inside PS Games by default for this example
+            const data = await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games');
+            const filtered = data.filter(p => (p.name || p.Name || "").toLowerCase().includes(query));
             document.getElementById('product-grid').innerHTML = filtered.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
@@ -203,20 +203,14 @@
             const home = document.getElementById('home-view');
             const prod = document.getElementById('product-view');
             if(page === 'home') {
-                home.classList.remove('hidden');
-                prod.classList.add('hidden');
+                home.classList.remove('hidden'); prod.classList.add('hidden');
                 loadHome();
             } else {
-                home.classList.add('hidden');
-                prod.classList.remove('hidden');
+                home.classList.add('hidden'); prod.classList.remove('hidden');
             }
         }
 
-        // Run on start
-        window.onload = () => {
-            loadHome();
-            lucide.createIcons();
-        };
+        window.onload = () => { loadHome(); lucide.createIcons(); };
     </script>
 </body>
 </html>
