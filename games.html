@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Crew Store | Catalog</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+	<header class="header-section">
+		<div class="header-warp">
+			<div class="header-bar-warp d-flex">
+				<a href="index.html" class="site-logo"><h3 style="color:white;">CREW<span style="color:#ffb320">STORE</span></h3></a>
+				<nav class="top-nav-area w-100">
+					<ul class="main-menu primary-menu">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="games.html">Games</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<section class="page-top-section set-bg" style="background-color: #081624; padding: 100px 0;">
+		<div class="container text-center">
+			<h2 style="color: white;">Game Catalog</h2>
+			<div class="search-widget" style="max-width: 600px; margin: 30px auto;">
+				<input type="text" id="gameSearch" placeholder="Search 5,000+ games..." onkeyup="filterGames()" style="width: 100%; padding: 15px; border-radius: 50px; border: none;">
+			</div>
+		</div>
+	</section>
+
+	<section class="blog-page">
+		<div class="container">
+			<div class="row" id="gameGrid">
+				</div>
+		</div>
+	</section>
+
+	<script>
+		let gamesData = [];
+		Papa.parse("games.csv", {
+			download: true,
+			header: true,
+			complete: function(results) {
+				gamesData = results.data.filter(row => row['game name']);
+				displayGames(gamesData);
+			}
+		});
+
+		function displayGames(data) {
+			const grid = document.getElementById('gameGrid');
+			grid.innerHTML = data.map(game => `
+				<div class="col-md-3 mb-4">
+					<div class="blog-item" style="background: #15102e; padding: 15px; border-radius: 10px;">
+						<img src="${game['image'] || 'img/blog-big/1.jpg'}" style="width:100%; height:250px; object-fit:cover; border-radius: 5px;">
+						<h5 style="color:white; margin-top:15px; font-size:16px;">${game['game name']}</h5>
+						<p style="color:#ffb320; font-weight:bold;">${game['Price in dinar']}</p>
+						<a href="https://wa.me/964000000000" class="read-more" style="color:white; background:#ffb320; padding:5px 10px; border-radius:3px; font-size:12px;">Order Now</a>
+					</div>
+				</div>
+			`).join('');
+		}
+
+		function filterGames() {
+			const val = document.getElementById('gameSearch').value.toLowerCase();
+			const filtered = gamesData.filter(g => g['game name'].toLowerCase().includes(val));
+			displayGames(filtered);
+		}
+	</script>
+</body>
+</html>
