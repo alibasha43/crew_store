@@ -62,8 +62,11 @@
             background: rgba(255,255,255,0.05); border-radius: 8px; transition: 0.3s; color: #fff;
         }
         .social-btn:hover { background: #3b82f6; color: white; transform: translateY(-3px); }
-        .payment-pill { height: 28px; border-radius: 4px; filter: grayscale(1); transition: 0.3s; cursor: pointer; }
-        .payment-pill:hover { filter: grayscale(0); }
+        
+        /* Local Payment Icons Styling */
+        .iraq-payments { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; opacity: 0.7; transition: 0.5s; }
+        .iraq-payments:hover { opacity: 1; }
+        .payment-logo { height: 24px; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -142,6 +145,7 @@
                         <a href="https://wa.me/9647718168589" target="_blank" class="social-btn"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
                         <a href="https://www.facebook.com/CrewStore91" target="_blank" class="social-btn"><i data-lucide="facebook" class="w-5 h-5"></i></a>
                         <a href="https://www.instagram.com/crewst0re" target="_blank" class="social-btn"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://t.me/crewst0re" target="_blank" class="social-btn"><i data-lucide="send" class="w-5 h-5"></i></a>
                     </div>
                 </div>
 
@@ -179,10 +183,12 @@
                 <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">
                     COPYRIGHT © 2026 - ALL RIGHTS RESERVED BY <span class="text-blue-500">CREW STORE</span>
                 </p>
-                <div class="flex items-center gap-4 opacity-50 grayscale hover:opacity-100 transition-all duration-500">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-4" alt="PayPal">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-3" alt="Visa">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-5" alt="Mastercard">
+                <div class="iraq-payments">
+                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/FastPay.png" class="payment-logo" alt="FastPay">
+                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/FIB.png" class="payment-logo" alt="FIB">
+                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/ZainCash.png" class="payment-logo" alt="Zain Cash">
+                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/Asiacell.png" class="payment-logo" alt="Asiacell">
+                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/QiCard.png" class="payment-logo" alt="Qi Card">
                 </div>
             </div>
         </div>
