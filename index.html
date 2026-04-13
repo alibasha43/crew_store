@@ -11,18 +11,16 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
-            background-size: cover;
-            background-attachment: fixed;
-            color: #fff;
-            min-height: 100vh;
+            background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        
+        /* Fixed Hover for Dropdowns */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-menu { display: none; position: absolute; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); min-width: 180px; z-index: 100; border-radius: 12px; padding: 10px; margin-top: 0; }
         .dropdown:hover .dropdown-menu { display: block; }
+        
         .product-card { transition: all 0.3s ease; }
         .product-card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.5); }
     </style>
@@ -32,138 +30,158 @@
     <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue">
-                    <i data-lucide="zap" class="text-white fill-current"></i>
-                </div>
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue"><i data-lucide="zap" class="text-white fill-current"></i></div>
                 <span class="text-2xl font-black tracking-tighter uppercase">CREW<span class="text-blue-500">STORE</span></span>
             </div>
 
             <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest">
                 <a href="#" onclick="showPage('home')" class="hover:text-blue-500 transition">Home</a>
-                <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
-                    <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
-                        <a href="#" onclick="filterSheet('PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
-                        <a href="#" onclick="filterSheet('Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
-                        <a href="#" onclick="filterSheet('Steam')" class="block py-2 hover:text-blue-500">Steam</a>
+                
+                <div class="dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="loadCategory('Games', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
+                        <a href="#" onclick="loadCategory('Games', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
+                        <a href="#" onclick="loadCategory('Games', 'PC')" class="block py-2 hover:text-blue-500">PC / Steam</a>
                     </div>
                 </div>
-                <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
-                    <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
-                        <a href="#" onclick="filterSheet('Subscriptions', 'PlayStation')" class="block py-2 hover:text-blue-500">PS Plus</a>
-                        <a href="#" onclick="filterSheet('Subscriptions', 'Xbox')" class="block py-2 hover:text-blue-500">Game Pass</a>
+
+                <div class="dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="loadCategory('Subscriptions', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
+                        <a href="#" onclick="loadCategory('Subscriptions', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
+                        <a href="#" onclick="loadCategory('Subscriptions', 'PC')" class="block py-2 hover:text-blue-500">PC / Other</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="loadCategory('GiftCards', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
+                        <a href="#" onclick="loadCategory('GiftCards', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
+                        <a href="#" onclick="loadCategory('GiftCards', 'PC')" class="block py-2 hover:text-blue-500">PC / Steam</a>
                     </div>
                 </div>
             </div>
 
             <div class="relative w-64">
                 <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></i>
-                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm transition-all">
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search anything..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm">
             </div>
         </div>
     </nav>
 
     <div id="content" class="pt-32 min-h-screen">
-        <div id="home-view" class="max-w-7xl mx-auto px-6 text-center py-20">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight uppercase leading-none">CREW <span class="text-blue-500">STORE</span></h1>
-            <button onclick="filterSheet('PlayStation')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition neon-blue uppercase">Enter Store</button>
+        <div id="home-view" class="max-w-7xl mx-auto px-6">
+            <div class="text-center py-10">
+                <h1 class="text-6xl md:text-8xl font-black mb-4 tracking-tight uppercase">CREW <span class="text-blue-500">STORE</span></h1>
+                <p class="text-gray-400 mb-8">Discover random deals from our armory</p>
+            </div>
+            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-20">
+                </div>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden pb-20">
             <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-10">Armory</h2>
-            <div id="loading-state" class="text-center py-20 hidden">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            </div>
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
         </div>
     </div>
 
     <script>
-        const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8'; 
-        const WHATSAPP_NUMBER = '964000000000'; 
+        // --- CONFIGURATION: Add your specific Sheet IDs for each category ---
+        const IDS = {
+            'Games': '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8',
+            'Subscriptions': '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', 
+            'GiftCards': '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8'
+        };
+        const WHATSAPP_NUMBER = '964000000000';
 
-        async function fetchSheetData(tabName) {
-            document.getElementById('loading-state').classList.remove('hidden');
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${tabName}`;
+        let allLoadedProducts = [];
+
+        async function fetchSheetData(category, platform = '') {
+            const id = IDS[category];
+            // Uses the category name as the Tab Name in Google Sheets
+            const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${category}`;
+            
             try {
                 const response = await fetch(url);
-                const data = await response.text();
-                return parseCSV(data);
-            } catch (e) {
-                console.error("Fetch error:", e);
-                return [];
-            } finally {
-                document.getElementById('loading-state').classList.add('hidden');
-            }
+                const text = await response.text();
+                const data = parseCSV(text);
+                return platform ? data.filter(p => p.Platform === platform) : data;
+            } catch (e) { return []; }
         }
 
         function parseCSV(csv) {
             const lines = csv.split('\n');
-            if (lines.length < 2) return [];
-            
-            // This parts cleans up the headers to avoid "undefined"
-            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-            
+            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
             return lines.slice(1).map(line => {
-                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // Better CSV split
+                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const row = {};
-                headers.forEach((header, i) => {
-                    row[header] = values[i] ? values[i].replace(/"/g, '').trim() : "";
+                headers.forEach((h, i) => {
+                    row[h] = values[i] ? values[i].replace(/"/g, '').trim() : "";
                 });
                 return row;
             });
         }
 
-        async function filterSheet(tab, platformFilter = '') {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('product-view').classList.remove('hidden');
-            document.getElementById('category-title').innerText = tab;
-            
-            const products = await fetchSheetData(tab);
-            const grid = document.getElementById('product-grid');
-            
-            const filtered = platformFilter 
-                ? products.filter(p => p.Platform === platformFilter) 
-                : products;
-
-            grid.innerHTML = filtered.map(p => {
-                // FALLBACKS: If "Name" is undefined, it tries "name"
-                const name = p.Name || p.name || "Unknown Product";
-                const price = p.Price || p.price || "0.00";
-                const img = p.ImageURL || p.imageurl || "https://via.placeholder.com/300";
-
-                return `
+        function renderCard(p) {
+            const name = p.name || "Unknown Game";
+            const price = p.price || "0.00";
+            const img = p.imageurl || "https://via.placeholder.com/300";
+            return `
                 <div class="glass p-4 rounded-2xl border border-white/5 product-card group">
                     <img src="${img}" class="w-full h-56 object-cover rounded-xl mb-4 group-hover:scale-105 transition duration-500">
-                    <h3 class="font-bold text-lg mb-1 truncate">${name}</h3>
+                    <h3 class="font-bold text-lg mb-1 leading-tight">${name}</h3>
                     <div class="flex justify-between items-center mt-4">
-                        <span class="text-2xl font-black text-blue-500">$${price}</span>
+                        <span class="text-2xl font-black text-blue-500">${price}</span>
                         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" target="_blank" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
                 </div>`;
-            }).join('');
+        }
+
+        async function loadCategory(cat, plat) {
+            showPage('product');
+            document.getElementById('category-title').innerText = `${plat} ${cat}`;
+            const products = await fetchSheetData(cat, plat);
+            document.getElementById('product-grid').innerHTML = products.map(p => renderCard(p)).join('');
+            lucide.createIcons();
+        }
+
+        async function loadHomeRandom() {
+            // Fetches from "Games" sheet by default for random items
+            const products = await fetchSheetData('Games');
+            allLoadedProducts = products; // Store for search
+            const shuffled = products.sort(() => 0.5 - Math.random()).slice(0, 8);
+            document.getElementById('random-grid').innerHTML = shuffled.map(p => renderCard(p)).join('');
             lucide.createIcons();
         }
 
         function searchProducts() {
-            let input = document.getElementById('mainSearch').value.toLowerCase();
-            let cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                let name = card.querySelector('h3').innerText.toLowerCase();
-                card.style.display = name.includes(input) ? 'block' : 'none';
-            });
+            const query = document.getElementById('mainSearch').value.toLowerCase();
+            if(!query) return;
+            showPage('product');
+            document.getElementById('category-title').innerText = "Search Results";
+            const filtered = allLoadedProducts.filter(p => (p.name || "").toLowerCase().includes(query));
+            document.getElementById('product-grid').innerHTML = filtered.map(p => renderCard(p)).join('');
+            lucide.createIcons();
         }
 
         function showPage(page) {
             if(page === 'home') {
                 document.getElementById('home-view').classList.remove('hidden');
                 document.getElementById('product-view').classList.add('hidden');
+                loadHomeRandom();
+            } else {
+                document.getElementById('home-view').classList.add('hidden');
+                document.getElementById('product-view').classList.remove('hidden');
             }
         }
 
+        // Initialize
+        loadHomeRandom();
         lucide.createIcons();
     </script>
 </body>
