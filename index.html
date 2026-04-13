@@ -11,7 +11,6 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Update your background image URL here */
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
             background-size: cover;
             background-attachment: fixed;
@@ -26,18 +25,8 @@
         }
 
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
-        
         .dropdown:hover .dropdown-menu { display: block; }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(59, 130, 246, 0.5);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 10px; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.5); }
     </style>
 </head>
 <body>
@@ -45,43 +34,41 @@
     <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-                <img src="https://via.placeholder.com/40" alt="Logo" class="h-10 w-10 object-contain rounded-lg">
-                <span class="text-2xl font-black tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue">
+                    <i data-lucide="zap" class="text-white fill-current"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter uppercase">CREW<span class="text-blue-500">STORE</span></span>
             </div>
 
             <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest">
                 <a href="#" onclick="showPage('home')" class="hover:text-blue-500 transition">Home</a>
-                
                 <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
                     <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
                         <a href="#" onclick="filterSheet('PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
                         <a href="#" onclick="filterSheet('Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
                         <a href="#" onclick="filterSheet('Steam')" class="block py-2 hover:text-blue-500">Steam</a>
                     </div>
                 </div>
-
                 <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
                     <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
                         <a href="#" onclick="filterSheet('Subscriptions', 'PlayStation')" class="block py-2 hover:text-blue-500">PS Plus</a>
                         <a href="#" onclick="filterSheet('Subscriptions', 'Xbox')" class="block py-2 hover:text-blue-500">Game Pass</a>
                     </div>
                 </div>
-
                 <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
                     <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
                         <a href="#" onclick="filterSheet('GiftCards', 'Steam')" class="block py-2 hover:text-blue-500">Steam Cards</a>
                         <a href="#" onclick="filterSheet('GiftCards', 'PlayStation')" class="block py-2 hover:text-blue-500">PSN Cards</a>
-                        <a href="#" onclick="filterSheet('GiftCards', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox Cards</a>
                     </div>
                 </div>
             </div>
 
             <div class="relative w-64">
                 <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></i>
-                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search the store..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm transition-all">
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm transition-all">
             </div>
         </div>
     </nav>
@@ -91,42 +78,29 @@
             <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight uppercase leading-none">
                 CREW <span class="text-blue-500">STORE</span><br>OFFICIAL
             </h1>
-            <p class="text-gray-400 text-xl mb-12 max-w-2xl mx-auto">
-                Your one-stop destination for premium accounts and digital gaming assets. Select a category above to view our live stock.
+            <p class="text-gray-400 text-xl mb-12 max-w-2xl mx-auto italic">
+                Get your digital assets instantly. Manual delivery via WhatsApp for 100% security.
             </p>
             <div class="flex justify-center gap-4">
-                <button onclick="filterSheet('PlayStation')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition neon-blue">Browse PS Games</button>
+                <button onclick="filterSheet('PlayStation')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition neon-blue uppercase tracking-tighter">Enter Store</button>
             </div>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden pb-20">
             <div class="flex items-center gap-4 mb-10">
-                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500">Products</h2>
+                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500">Armory</h2>
                 <div class="h-px flex-grow bg-white/10"></div>
             </div>
             <div id="loading-state" class="text-center py-20 hidden">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-                <p class="mt-4 text-gray-400">Syncing with Armory...</p>
+                <p class="mt-4 text-gray-400">Loading your games...</p>
             </div>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
         </div>
     </div>
 
-    <footer class="py-12 glass border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <span class="text-xl font-black tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
-            <p class="text-gray-500 text-xs uppercase tracking-widest">© 2026 Secured Digital Assets</p>
-            <div class="flex gap-6 text-gray-400">
-                <a href="#" class="hover:text-blue-500 transition"><i data-lucide="instagram"></i></a>
-                <a href="#" class="hover:text-blue-500 transition"><i data-lucide="message-circle"></i></a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // --- CONFIGURATION ---
-        const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8'; // Replace with your ID
+        const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8'; 
         const WHATSAPP_NUMBER = '964000000000'; // Replace with your number
 
         async function fetchSheetData(tabName) {
@@ -137,7 +111,6 @@
                 const data = await response.text();
                 return parseCSV(data);
             } catch (e) {
-                console.error("Error fetching data:", e);
                 return [];
             } finally {
                 toggleLoading(false);
@@ -147,10 +120,9 @@
         function parseCSV(csv) {
             const lines = csv.split('\n');
             const result = [];
+            if(lines.length < 2) return [];
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-            
             for (let i = 1; i < lines.length; i++) {
-                if (!lines[i]) continue;
                 const obj = {};
                 const currentline = lines[i].split(',');
                 headers.forEach((h, index) => {
@@ -168,28 +140,15 @@
             
             const products = await fetchSheetData(tab);
             const grid = document.getElementById('product-grid');
-            
-            const filtered = platformFilter 
-                ? products.filter(p => p.Platform === platformFilter) 
-                : products;
-
-            if (filtered.length === 0) {
-                grid.innerHTML = '<p class="text-gray-500 col-span-full text-center py-10">No items found in this sector.</p>';
-                return;
-            }
+            const filtered = platformFilter ? products.filter(p => p.Platform === platformFilter) : products;
 
             grid.innerHTML = filtered.map(p => `
                 <div class="glass p-4 rounded-2xl border border-white/5 transition-all duration-300 product-card group">
-                    <div class="overflow-hidden rounded-xl mb-4 h-48">
-                        <img src="${p.ImageURL || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    </div>
+                    <img src="${p.ImageURL || 'https://via.placeholder.com/300'}" class="w-full h-56 object-cover rounded-xl mb-4 group-hover:scale-105 transition duration-500 shadow-lg">
                     <h3 class="font-bold text-lg mb-1 truncate">${p.Name}</h3>
-                    <p class="text-xs text-gray-500 uppercase font-bold mb-4">${p.Platform || tab}</p>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center mt-4">
                         <span class="text-2xl font-black text-blue-500">$${p.Price}</span>
-                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20am%20interested%20in%20buying:%20${encodeURIComponent(p.Name)}" 
-                           target="_blank" 
-                           class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(p.Name)}" target="_blank" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
