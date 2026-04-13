@@ -40,23 +40,32 @@
         .dropdown-menu a { display: block; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; text-shadow: none; }
         .dropdown-menu a:hover { background: #2563eb; color: white; text-shadow: none; }
 
-        /* Fixed Search Icon Position */
+        /* Search Bar with Icon Inside */
         .search-container { position: relative; width: 220px; display: flex; align-items: center; }
-        .search-container input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px; }
-        .search-container i { position: absolute; left: 15px; color: #3b82f6; width: 16px; height: 16px; pointer-events: none; }
+        .search-container input { 
+            width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px;
+        }
+        .search-container i { 
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+            color: #3b82f6; width: 16px; height: 16px; pointer-events: none; 
+        }
 
         .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
         
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
         
-        /* Fixed Filters & Pagination Alignment */
+        /* Filters & Pagination */
         .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; transition: 0.3s; }
         .filter-btn:hover { background: #2563eb; border-color: #2563eb; }
         
-        #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; width: 100%; }
-        .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; }
+        #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 2rem; }
+        .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; font-weight: 600; }
+        .page-btn:hover:not(.disabled) { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
         .page-btn.active { background: #2563eb; border-color: #2563eb; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+        .page-dots { color: rgba(255,255,255,0.3); padding: 0 5px; }
+        .page-btn.disabled { opacity: 0.3; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -238,23 +247,59 @@
             lucide.createIcons();
         }
 
+        function createPageBtn(page, label, active = false, disabled = false) {
+            const btn = document.createElement('button');
+            btn.innerHTML = label;
+            btn.className = `page-btn ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`;
+            if (!disabled) {
+                btn.onclick = () => { 
+                    currentPage = page; 
+                    renderGrid(); 
+                    window.scrollTo({top: 0, behavior: 'smooth'}); 
+                };
+            }
+            return btn;
+        }
+
         function renderPagination() {
             const pageCount = Math.ceil(currentData.length / itemsPerPage);
             const container = document.getElementById('pagination');
             container.innerHTML = '';
-            
             if(pageCount <= 1) return;
 
-            for(let i = 1; i <= pageCount; i++) {
-                const btn = document.createElement('button');
-                btn.innerText = i;
-                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-                btn.onclick = () => { currentPage = i; renderGrid(); window.scrollTo(0, 0); };
-                container.appendChild(btn);
+            // Prev Arrow
+            container.appendChild(createPageBtn(currentPage - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', false, currentPage === 1));
+
+            // Page Numbers Logic
+            const delta = 1; // Number of pages to show around current
+            const range = [];
+            for (let i = 1; i <= pageCount; i++) {
+                if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) {
+                    range.push(i);
+                }
             }
+
+            let l;
+            for (let i of range) {
+                if (l) {
+                    if (i - l === 2) {
+                        container.appendChild(createPageBtn(l + 1, l + 1));
+                    } else if (i - l !== 1) {
+                        const dots = document.createElement('span');
+                        dots.innerText = '...';
+                        dots.className = 'page-dots';
+                        container.appendChild(dots);
+                    }
+                }
+                container.appendChild(createPageBtn(i, i, i === currentPage));
+                l = i;
+            }
+
+            // Next Arrow
+            container.appendChild(createPageBtn(currentPage + 1, '<i data-lucide="chevron-right" class="w-4 h-4"></i>', false, currentPage === pageCount));
+            lucide.createIcons();
         }
 
-        // Helper to handle currency strings like "$19.99" or "25,000 IQD"
         function cleanPrice(price) {
             if (!price) return 0;
             return parseFloat(price.toString().replace(/[^\d.]/g, '')) || 0;
