@@ -15,14 +15,21 @@
             background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh; margin: 0;
         }
 
-        /* Glossy Navigation */
+        /* Glossy Navigation with Neon Text */
         nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
         .glass { background: rgba(15, 15, 15, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
         
         .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a, .nav-links button { text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; background: none; border: none; cursor: pointer; }
+        .nav-links a, .nav-links button { 
+            text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; 
+            background: none; border: none; cursor: pointer; 
+            text-shadow: 0 0 8px rgba(255,255,255,0.3); transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links button:hover { color: #3b82f6; text-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
         
+        .brand-neon { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+
         .dropdown { position: relative; padding: 30px 0; }
         .dropdown-menu { 
             display: none; position: absolute; top: 80px; left: 0; 
@@ -30,23 +37,26 @@
             min-width: 220px; border-radius: 12px; padding: 10px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu a { display: block; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; }
-        .dropdown-menu a:hover { background: #2563eb; color: white; }
+        .dropdown-menu a { display: block; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; text-shadow: none; }
+        .dropdown-menu a:hover { background: #2563eb; color: white; text-shadow: none; }
 
-        .search-container { position: relative; width: 220px; }
+        /* Fixed Search Icon Position */
+        .search-container { position: relative; width: 220px; display: flex; align-items: center; }
         .search-container input { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px; }
-        .search-container i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #3b82f6; width: 16px; height: 16px; }
+        .search-container i { position: absolute; left: 15px; color: #3b82f6; width: 16px; height: 16px; pointer-events: none; }
 
         .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
         
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
         
-        /* Filters & Pagination */
+        /* Fixed Filters & Pagination Alignment */
         .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; transition: 0.3s; }
         .filter-btn:hover { background: #2563eb; border-color: #2563eb; }
-        .page-btn { padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
-        .page-btn.active { background: #2563eb; border-color: #2563eb; }
+        
+        #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; width: 100%; }
+        .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; }
+        .page-btn.active { background: #2563eb; border-color: #2563eb; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
     </style>
 </head>
 <body>
@@ -57,7 +67,7 @@
                 <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center neon-blue group-hover:rotate-12 transition">
                     <i data-lucide="zap" class="text-white fill-current w-5 h-5"></i>
                 </div>
-                <span class="text-xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
+                <span class="text-xl font-black uppercase tracking-tighter brand-neon">CREW<span class="text-blue-500">STORE</span></span>
             </div>
 
             <div class="nav-links">
@@ -131,7 +141,7 @@
             
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
             
-            <div id="pagination" class="flex justify-center gap-4 pb-32"></div>
+            <div id="pagination" class="pb-32"></div>
         </div>
     </div>
 
@@ -145,14 +155,6 @@
                 <a href="#" class="hover:text-blue-500">Terms</a>
                 <a href="#" class="hover:text-blue-500">Privacy</a>
                 <a href="#" class="hover:text-blue-500">Contact</a>
-            </div>
-            <div class="flex gap-4">
-                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10 hover:border-blue-500 cursor-pointer transition">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                </div>
-                <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10 hover:border-blue-500 cursor-pointer transition">
-                    <i data-lucide="twitter" class="w-5 h-5"></i>
-                </div>
             </div>
         </div>
     </footer>
@@ -252,10 +254,20 @@
             }
         }
 
+        // Helper to handle currency strings like "$19.99" or "25,000 IQD"
+        function cleanPrice(price) {
+            if (!price) return 0;
+            return parseFloat(price.toString().replace(/[^\d.]/g, '')) || 0;
+        }
+
         function sortItems(type) {
-            if(type === 'name') currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-            if(type === 'price-low') currentData.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-            if(type === 'price-high') currentData.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            if(type === 'name') {
+                currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            } else if(type === 'price-low') {
+                currentData.sort((a, b) => cleanPrice(a.price) - cleanPrice(b.price));
+            } else if(type === 'price-high') {
+                currentData.sort((a, b) => cleanPrice(b.price) - cleanPrice(a.price));
+            }
             currentPage = 1;
             renderGrid();
         }
@@ -276,7 +288,6 @@
             if(query.length < 2) return;
             showPage('product');
             document.getElementById('category-title').innerText = "Search Results";
-            // Logic to search through games tab as base
             fetchCSV(STORE_CONFIG['ps_games'].id, 'Games').then(data => {
                 currentData = data.filter(p => (p.name || "").toLowerCase().includes(query));
                 renderGrid();
