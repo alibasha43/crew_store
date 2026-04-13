@@ -3,118 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crew Store | Premium Gaming</title>
+    <title>Crew Store | Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
-            background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
+            background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh; margin: 0;
         }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+
+        /* Fixed Navigation Layout */
+        nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+
+        .glass { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         
-        /* Fixed Hover for Dropdowns */
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-menu { display: none; position: absolute; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1); min-width: 180px; z-index: 100; border-radius: 12px; padding: 10px; margin-top: 0; }
+        /* Dropdown Fixes */
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a, .nav-links button { text-decoration: none; color: white; font-weight: 700; font-size: 13px; letter-spacing: 1px; background: none; border: none; cursor: pointer; padding: 10px 0; }
+        
+        .dropdown { position: relative; }
+        .dropdown-menu { 
+            display: none; position: absolute; top: 100%; left: 0; 
+            background: #111; border: 1px solid rgba(255,255,255,0.1); 
+            min-width: 200px; border-radius: 8px; padding: 10px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { display: block; padding: 10px 20px; text-transform: none; font-weight: 500; transition: 0.2s; }
+        .dropdown-menu a:hover { background: #1d4ed8; color: white; }
+
+        .search-container { position: relative; width: 250px; }
+        .search-container input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; }
+        .search-container i { position: absolute; left: 15px; top: 10px; color: #666; }
+
+        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
         
-        .product-card { transition: all 0.3s ease; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.5); }
+        .neon-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <nav class="glass">
+        <div class="nav-container">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue"><i data-lucide="zap" class="text-white fill-current"></i></div>
-                <span class="text-2xl font-black tracking-tighter uppercase">CREW<span class="text-blue-500">STORE</span></span>
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-blue">
+                    <i data-lucide="zap" class="text-white fill-current"></i>
+                </div>
+                <span class="text-xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
             </div>
 
-            <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest">
-                <a href="#" onclick="showPage('home')" class="hover:text-blue-500 transition">Home</a>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('home')">HOME</a>
                 
                 <div class="dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button>GAMES <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('Games', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
-                        <a href="#" onclick="loadCategory('Games', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
-                        <a href="#" onclick="loadCategory('Games', 'PC')" class="block py-2 hover:text-blue-500">PC / Steam</a>
+                        <a href="#" onclick="loadCategory('Games', 'PlayStation')">PlayStation Games</a>
+                        <a href="#" onclick="loadCategory('Games', 'Xbox')">Xbox Games</a>
+                        <a href="#" onclick="loadCategory('Games', 'PC')">PC / Steam Games</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button>SUBSCRIPTIONS <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('Subscriptions', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
-                        <a href="#" onclick="loadCategory('Subscriptions', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
-                        <a href="#" onclick="loadCategory('Subscriptions', 'PC')" class="block py-2 hover:text-blue-500">PC / Other</a>
+                        <a href="#" onclick="loadCategory('Subscriptions', 'PlayStation')">PS Plus</a>
+                        <a href="#" onclick="loadCategory('Subscriptions', 'Xbox')">Game Pass</a>
+                        <a href="#" onclick="loadCategory('Subscriptions', 'PC')">PC Subs</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase py-4">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <button>GIFT CARDS <i data-lucide="chevron-down" class="inline w-4 h-4"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadCategory('GiftCards', 'PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
-                        <a href="#" onclick="loadCategory('GiftCards', 'Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
-                        <a href="#" onclick="loadCategory('GiftCards', 'PC')" class="block py-2 hover:text-blue-500">PC / Steam</a>
+                        <a href="#" onclick="loadCategory('GiftCards', 'PlayStation')">PSN Cards</a>
+                        <a href="#" onclick="loadCategory('GiftCards', 'Xbox')">Xbox Cards</a>
+                        <a href="#" onclick="loadCategory('GiftCards', 'PC')">Steam Cards</a>
                     </div>
                 </div>
             </div>
 
-            <div class="relative w-64">
-                <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></i>
-                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search anything..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm">
+            <div class="search-container">
+                <i data-lucide="search" class="w-4 h-4"></i>
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search items...">
             </div>
         </div>
     </nav>
 
-    <div id="content" class="pt-32 min-h-screen">
+    <div id="content" class="pt-32">
         <div id="home-view" class="max-w-7xl mx-auto px-6">
             <div class="text-center py-10">
-                <h1 class="text-6xl md:text-8xl font-black mb-4 tracking-tight uppercase">CREW <span class="text-blue-500">STORE</span></h1>
-                <p class="text-gray-400 mb-8">Discover random deals from our armory</p>
+                <h1 class="text-7xl font-black mb-4 uppercase">CREW <span class="text-blue-500">STORE</span></h1>
+                <p class="text-gray-500 text-lg uppercase tracking-widest italic mb-10">Featured Daily Deals</p>
             </div>
-            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-20">
-                </div>
+            <div id="random-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6"></div>
         </div>
 
-        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden pb-20">
-            <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-10">Armory</h2>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
+        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
+            <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-8"></h2>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6 pb-20"></div>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURATION: Add your specific Sheet IDs for each category ---
-        const IDS = {
-            'Games': '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8',
-            'Subscriptions': '', 
-            'GiftCards': ''
-        };
+        const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8';
         const WHATSAPP_NUMBER = '964000000000';
 
-        let allLoadedProducts = [];
-
-        async function fetchSheetData(category, platform = '') {
-            const id = IDS[category];
-            // Uses the category name as the Tab Name in Google Sheets
-            const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${category}`;
-            
+        async function fetchSheetData(tabName) {
+            // Updated URL to ensure clean CSV fetching
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
             try {
                 const response = await fetch(url);
                 const text = await response.text();
-                const data = parseCSV(text);
-                return platform ? data.filter(p => p.Platform === platform) : data;
-            } catch (e) { return []; }
+                return parseCSV(text);
+            } catch (e) {
+                console.error("Error fetching " + tabName, e);
+                return [];
+            }
         }
 
         function parseCSV(csv) {
             const lines = csv.split('\n');
+            if (lines.length < 2) return [];
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
+            
             return lines.slice(1).map(line => {
                 const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const row = {};
@@ -125,64 +141,82 @@
             });
         }
 
-        function renderCard(p) {
-            const name = p.name || "Unknown Game";
-            const price = p.price || "0.00";
-            const img = p.imageurl || "https://via.placeholder.com/300";
+        function createCard(p) {
+            // Handle lowercase/uppercase mismatches automatically
+            const name = p.name || p.Name || "Unknown Game";
+            const price = p.price || p.Price || "0.00";
+            const img = p.imageurl || p.ImageURL || "https://via.placeholder.com/400";
+
             return `
-                <div class="glass p-4 rounded-2xl border border-white/5 product-card group">
-                    <img src="${img}" class="w-full h-56 object-cover rounded-xl mb-4 group-hover:scale-105 transition duration-500">
-                    <h3 class="font-bold text-lg mb-1 leading-tight">${name}</h3>
-                    <div class="flex justify-between items-center mt-4">
+                <div class="product-card p-4">
+                    <img src="${img}" class="w-full h-64 object-cover rounded-xl mb-4 shadow-2xl">
+                    <h3 class="font-bold text-lg leading-tight mb-4 min-h-[50px]">${name}</h3>
+                    <div class="flex justify-between items-center">
                         <span class="text-2xl font-black text-blue-500">${price}</span>
-                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" target="_blank" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" 
+                           target="_blank" class="bg-blue-600 p-3 rounded-xl hover:bg-blue-500 transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
                 </div>`;
         }
 
-        async function loadCategory(cat, plat) {
+        async function loadCategory(tab, platform) {
             showPage('product');
-            document.getElementById('category-title').innerText = `${plat} ${cat}`;
-            const products = await fetchSheetData(cat, plat);
-            document.getElementById('product-grid').innerHTML = products.map(p => renderCard(p)).join('');
+            document.getElementById('category-title').innerText = `${platform} ${tab}`;
+            const products = await fetchSheetData(tab);
+            
+            // Filter by platform column
+            const filtered = products.filter(p => {
+                const pValue = (p.platform || p.Platform || "").toLowerCase();
+                return pValue === platform.toLowerCase();
+            });
+
+            document.getElementById('product-grid').innerHTML = filtered.length > 0 
+                ? filtered.map(p => createCard(p)).join('')
+                : `<p class="col-span-full text-center text-gray-500">No products found in the "${tab}" tab with platform "${platform}".</p>`;
             lucide.createIcons();
         }
 
-        async function loadHomeRandom() {
-            // Fetches from "Games" sheet by default for random items
+        async function loadHome() {
+            // Shows random items from your "Games" sheet
             const products = await fetchSheetData('Games');
-            allLoadedProducts = products; // Store for search
+            if(products.length === 0) return;
             const shuffled = products.sort(() => 0.5 - Math.random()).slice(0, 8);
-            document.getElementById('random-grid').innerHTML = shuffled.map(p => renderCard(p)).join('');
+            document.getElementById('random-grid').innerHTML = shuffled.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
 
-        function searchProducts() {
+        async function searchProducts() {
             const query = document.getElementById('mainSearch').value.toLowerCase();
-            if(!query) return;
+            if(query.length < 2) return;
+            
             showPage('product');
             document.getElementById('category-title').innerText = "Search Results";
-            const filtered = allLoadedProducts.filter(p => (p.name || "").toLowerCase().includes(query));
-            document.getElementById('product-grid').innerHTML = filtered.map(p => renderCard(p)).join('');
+            const products = await fetchSheetData('Games'); // Searches Games tab
+            const filtered = products.filter(p => (p.name || p.Name || "").toLowerCase().includes(query));
+            document.getElementById('product-grid').innerHTML = filtered.map(p => createCard(p)).join('');
             lucide.createIcons();
         }
 
         function showPage(page) {
+            const home = document.getElementById('home-view');
+            const prod = document.getElementById('product-view');
             if(page === 'home') {
-                document.getElementById('home-view').classList.remove('hidden');
-                document.getElementById('product-view').classList.add('hidden');
-                loadHomeRandom();
+                home.classList.remove('hidden');
+                prod.classList.add('hidden');
+                loadHome();
             } else {
-                document.getElementById('home-view').classList.add('hidden');
-                document.getElementById('product-view').classList.remove('hidden');
+                home.classList.add('hidden');
+                prod.classList.remove('hidden');
             }
         }
 
-        // Initialize
-        loadHomeRandom();
-        lucide.createIcons();
+        // Run on start
+        window.onload = () => {
+            loadHome();
+            lucide.createIcons();
+        };
     </script>
 </body>
 </html>
