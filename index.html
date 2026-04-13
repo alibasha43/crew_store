@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crew Store | Premium Gaming Gear</title>
+    <title>Crew Store | Premium Gaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -11,207 +11,153 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #050505;
+            /* CHANGE BACKGROUND IMAGE HERE */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070');
+            background-size: cover;
+            background-attachment: fixed;
             color: #fff;
-            overflow-x: hidden;
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .neon-border {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.5);
-        }
-
-        .neon-text {
-            text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
-        }
-
-        .page-transition {
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        
+        /* Dropdown styling */
+        .dropdown:hover .dropdown-menu { display: block; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center neon-border">
-                    <i data-lucide="zap" class="text-white fill-current"></i>
-                </div>
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+                <img src="YOUR_LOGO_URL_HERE" alt="Logo" class="h-10 w-10 object-contain">
                 <span class="text-2xl font-black tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
             </div>
-            <div class="hidden md:flex gap-8 font-bold text-sm uppercase tracking-widest text-gray-400">
-                <a href="javascript:void(0)" onclick="showPage('home')" class="hover:text-blue-500 transition">Home</a>
-                <a href="javascript:void(0)" onclick="showPage('category')" class="hover:text-blue-500 transition">Shop All</a>
-                <a href="https://wa.me/964000000000" class="hover:text-blue-500 transition">Support</a>
+
+            <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest">
+                <a href="#" onclick="showPage('home')" class="hover:text-blue-500 transition">Home</a>
+                
+                <div class="relative dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1">Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu hidden absolute bg-black border border-white/10 p-4 w-48 mt-2 rounded-xl">
+                        <a href="#" onclick="filterSheet('PlayStation')" class="block py-2 hover:text-blue-500">PlayStation</a>
+                        <a href="#" onclick="filterSheet('Xbox')" class="block py-2 hover:text-blue-500">Xbox</a>
+                        <a href="#" onclick="filterSheet('Steam')" class="block py-2 hover:text-blue-500">Steam</a>
+                    </div>
+                </div>
+
+                <div class="relative dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1">Subscriptions <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu hidden absolute bg-black border border-white/10 p-4 w-48 mt-2 rounded-xl">
+                        <a href="#" onclick="filterSheet('Subscriptions', 'PSN')" class="block py-2">PS Plus</a>
+                        <a href="#" onclick="filterSheet('Subscriptions', 'Xbox')" class="block py-2">Game Pass</a>
+                    </div>
+                </div>
+
+                <div class="relative dropdown">
+                    <button class="hover:text-blue-500 flex items-center gap-1">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                    <div class="dropdown-menu hidden absolute bg-black border border-white/10 p-4 w-48 mt-2 rounded-xl">
+                        <a href="#" onclick="filterSheet('GiftCards', 'Steam')" class="block py-2">Steam</a>
+                        <a href="#" onclick="filterSheet('GiftCards', 'PSN')" class="block py-2">PSN Cards</a>
+                    </div>
+                </div>
             </div>
-            <button onclick="showPage('category')" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl font-bold transition neon-border">
-                Browse
-            </button>
+
+            <div class="relative w-64">
+                <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></i>
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search products..." class="w-full bg-white/5 border border-white/10 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
         </div>
     </nav>
 
-    <div id="content">
+    <div id="content" class="pt-32">
+        <div id="home-view" class="max-w-7xl mx-auto px-6 text-center py-20">
+            <h1 id="hero-title" class="text-6xl md:text-8xl font-black mb-6 tracking-tight uppercase">
+                YOUR <span class="text-blue-500">FAVORITE</span><br>GAMES
+            </h1>
+            <p class="text-gray-400 text-xl mb-10">Select a category above to browse our latest stock.</p>
         </div>
 
-    <footer class="py-12 glass border-t border-white/5 mt-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <span class="text-xl font-black tracking-tighter mb-4 block">CREWSTORE</span>
-            <p class="text-gray-500 text-sm">Instant Delivery • Secure Access • 24/7 Support</p>
-            <div class="flex justify-center gap-6 mt-6 text-gray-400">
-                <i data-lucide="instagram" class="hover:text-blue-500 cursor-pointer"></i>
-                <i data-lucide="twitter" class="hover:text-blue-500 cursor-pointer"></i>
-                <i data-lucide="facebook" class="hover:text-blue-500 cursor-pointer"></i>
-            </div>
+        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
+            <h2 id="category-title" class="text-3xl font-black mb-10 uppercase italic">Products</h2>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        const WHATSAPP_LINK = "https://wa.me/964000000000"; // CHANGE THIS TO YOUR NUMBER
+        // CONFIGURATION
+        const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+        const WHATSAPP_NUMBER = '964000000000';
 
-        // 1. HOME PAGE TEMPLATE
-        const homePage = `
-            <div class="page-transition">
-                <section class="relative h-screen flex items-center justify-center">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black"></div>
-                    <div class="relative z-10 text-center px-6">
-                        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight leading-none">
-                            PREMIUM <span class="text-blue-500 neon-text">GAMING</span><br>ACCOUNTS
-                        </h1>
-                        <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-10">
-                            Stop paying full price. Get elite accounts, subscriptions, and keys delivered to your WhatsApp instantly.
-                        </p>
-                        <div class="flex flex-wrap gap-4 justify-center">
-                            <button onclick="showPage('category')" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold text-lg transition neon-border">Start Shopping</button>
-                            <button onclick="showPage('category')" class="glass px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition">Featured Deals</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="max-w-7xl mx-auto px-6 py-20">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                        <div class="p-8 glass rounded-3xl">
-                            <i data-lucide="zap" class="mx-auto mb-4 text-blue-500 w-10 h-10"></i>
-                            <h3 class="text-xl font-bold mb-2">Instant Delivery</h3>
-                            <p class="text-gray-400">Get your credentials within minutes of purchase.</p>
-                        </div>
-                        <div class="p-8 glass rounded-3xl">
-                            <i data-lucide="shield-check" class="mx-auto mb-4 text-blue-500 w-10 h-10"></i>
-                            <h3 class="text-xl font-bold mb-2">Trusted Seller</h3>
-                            <p class="text-gray-400">100% secure accounts with lifetime warranty.</p>
-                        </div>
-                        <div class="p-8 glass rounded-3xl">
-                            <i data-lucide="headset" class="mx-auto mb-4 text-blue-500 w-10 h-10"></i>
-                            <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
-                            <p class="text-gray-400">Active human support via WhatsApp for all orders.</p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        `;
-
-        // 2. CATEGORY PAGE TEMPLATE
-        const categoryPage = `
-            <div class="page-transition pt-32 max-w-7xl mx-auto px-6">
-                <div class="flex justify-between items-center mb-12">
-                    <h2 class="text-4xl font-black italic uppercase">The Armory</h2>
-                    <div class="flex gap-2">
-                        <input type="text" placeholder="Search..." class="glass px-4 py-2 rounded-xl focus:outline-none focus:border-blue-500">
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="glass p-4 rounded-3xl group hover:border-blue-500/50 transition cursor-pointer" onclick="showProduct('PS Plus Extra - 1 Year', '59.99', 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3')">
-                        <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=500" class="rounded-2xl h-64 w-full object-cover mb-4">
-                        <h3 class="text-xl font-bold">PS Plus Extra - 1 Year</h3>
-                        <div class="flex justify-between items-center mt-4">
-                            <span class="text-2xl font-black text-blue-400">$59.99</span>
-                            <span class="text-xs font-bold uppercase text-gray-500">Subscription</span>
-                        </div>
-                    </div>
-                    <div class="glass p-4 rounded-3xl group hover:border-blue-500/50 transition cursor-pointer" onclick="showProduct('Steam $100 Gift Card', '92.00', 'https://images.unsplash.com/photo-1550745165-9bc0b252726f')">
-                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500" class="rounded-2xl h-64 w-full object-cover mb-4">
-                        <h3 class="text-xl font-bold">Steam $100 Wallet</h3>
-                        <div class="flex justify-between items-center mt-4">
-                            <span class="text-2xl font-black text-blue-400">$92.00</span>
-                            <span class="text-xs font-bold uppercase text-gray-500">Gift Card</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // 3. PRODUCT PAGE RENDERER
-        function renderProduct(name, price, img) {
-            return `
-                <div class="page-transition pt-32 max-w-7xl mx-auto px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div class="relative">
-                            <img src="${img}?auto=format&fit=crop&w=800" class="rounded-3xl neon-border">
-                            <div class="absolute top-4 left-4 bg-blue-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
-                                Instant Delivery
-                            </div>
-                        </div>
-                        <div>
-                            <h1 class="text-5xl font-black mb-4">${name}</h1>
-                            <div class="text-4xl font-black text-blue-500 mb-8">$${price}</div>
-                            
-                            <div class="glass p-6 rounded-2xl mb-8">
-                                <h4 class="font-bold mb-4 uppercase text-sm tracking-widest text-blue-400">Product Features</h4>
-                                <ul class="space-y-3 text-gray-300">
-                                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-blue-500"></i> Full Account Access</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-blue-500"></i> Changeable Credentials</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-blue-500"></i> Region Free (Global)</li>
-                                </ul>
-                            </div>
-
-                            <a href="${WHATSAPP_LINK}?text=Hello! I want to buy ${encodeURIComponent(name)}" 
-                               class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black text-xl flex items-center justify-center gap-3 transition neon-border">
-                                <i data-lucide="message-circle"></i> BUY NOW ON WHATSAPP
-                            </a>
-                            
-                            <div class="mt-12">
-                                <h4 class="font-bold mb-4">FAQ</h4>
-                                <details class="mb-2 glass p-4 rounded-xl cursor-pointer">
-                                    <summary class="font-bold">How do I receive the product?</summary>
-                                    <p class="text-gray-400 mt-2 text-sm">After payment, our agent will send the account details or code directly to your WhatsApp.</p>
-                                </details>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+        async function fetchSheetData(tabName) {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${tabName}`;
+            const response = await fetch(url);
+            const data = await response.text();
+            return parseCSV(data);
         }
 
-        // Router Logic
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const result = [];
+            const headers = lines[0].split(',');
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                const currentline = lines[i].split(',');
+                headers.forEach((h, index) => {
+                    obj[h.replace(/"/g, '').trim()] = currentline[index]?.replace(/"/g, '').trim();
+                });
+                result.push(obj);
+            }
+            return result;
+        }
+
+        async function filterSheet(tab, filterVal = '') {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('product-view').classList.remove('hidden');
+            document.getElementById('category-title').innerText = tab;
+            
+            const products = await fetchSheetData(tab);
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '<p class="text-blue-500">Loading Armory...</p>';
+
+            const filtered = filterVal ? products.filter(p => p.Platform === filterVal) : products;
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="glass p-4 rounded-2xl border border-white/5 hover:border-blue-500 transition group">
+                    <img src="${p.ImageURL}" class="w-full h-48 object-cover rounded-xl mb-4 group-hover:scale-105 transition">
+                    <h3 class="font-bold text-lg">${p.Name}</h3>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-xl font-black text-blue-400">$${p.Price}</span>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I want to buy ${p.Name}" class="bg-blue-600 p-2 rounded-lg"><i data-lucide="shopping-cart" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function searchProducts() {
+            let input = document.getElementById('mainSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('#product-grid > div');
+            cards.forEach(card => {
+                let name = card.querySelector('h3').innerText.toLowerCase();
+                card.style.display = name.includes(input) ? 'block' : 'none';
+            });
+        }
+
         function showPage(page) {
-            const content = document.getElementById('content');
-            if (page === 'home') content.innerHTML = homePage;
-            if (page === 'category') content.innerHTML = categoryPage;
-            lucide.createIcons();
-            window.scrollTo(0,0);
+            if(page === 'home') {
+                document.getElementById('home-view').classList.remove('hidden');
+                document.getElementById('product-view').classList.add('hidden');
+            }
         }
 
-        function showProduct(name, price, img) {
-            const content = document.getElementById('content');
-            content.innerHTML = renderProduct(name, price, img);
-            lucide.createIcons();
-            window.scrollTo(0,0);
-        }
-
-        // Initialize
-        showPage('home');
+        lucide.createIcons();
     </script>
 </body>
 </html>
