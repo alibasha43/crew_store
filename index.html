@@ -12,19 +12,18 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Applied your custom background image */
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://r2.erweima.ai/i/zadfkwzadfkwzadf.jpg');
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
             background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh; margin: 0;
         }
 
-        /* Glossy Navigation with Neon Text */
+        /* Glossy Navigation */
         nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
         .glass { background: rgba(15, 15, 15, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
         
-        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a, .nav-links button { 
-            text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; 
+            text-decoration: none; color: white; font-weight: 800; font-size: 11px; letter-spacing: 1px; 
             background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
             text-shadow: 0 0 8px rgba(255,255,255,0.3); transition: 0.3s;
         }
@@ -40,9 +39,8 @@
         }
         .dropdown:hover .dropdown-menu { display: block; }
         .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; text-shadow: none; }
-        .dropdown-menu a:hover { background: #2563eb; color: white; text-shadow: none; }
+        .dropdown-menu a:hover { background: #2563eb; color: white; }
 
-        /* Search Bar with Icon Inside */
         .search-container { position: relative; width: 220px; display: flex; align-items: center; }
         .search-container input { 
             width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); 
@@ -58,15 +56,13 @@
         
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
         
-        /* Filters & Pagination */
-        .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
+        .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 11px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
         .filter-btn:hover { background: #2563eb; border-color: #2563eb; }
         
         #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 2rem; }
         .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; font-weight: 600; }
         .page-btn:hover:not(.disabled) { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
         .page-btn.active { background: #2563eb; border-color: #2563eb; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
-        .page-dots { color: rgba(255,255,255,0.3); padding: 0 5px; }
         .page-btn.disabled { opacity: 0.3; cursor: not-allowed; }
     </style>
 </head>
@@ -75,39 +71,44 @@
     <nav class="glass">
         <div class="nav-container">
             <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
-                <div class="w-12 h-12 flex items-center justify-center transition group-hover:scale-110 duration-300">
-                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Crew Store Logo" class="w-full h-full object-contain">
+                <div class="w-10 h-10 flex items-center justify-center transition group-hover:scale-110 duration-300">
+                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <span class="text-xl font-black uppercase tracking-tighter brand-neon">CREW<span class="text-blue-500">STORE</span></span>
             </div>
 
             <div class="nav-links">
-                <a href="#" onclick="showPage('home')"><i data-lucide="home" class="w-4 h-4"></i> HOME</a>
-                
+                <a href="#" onclick="showPage('home')">
+                    <i data-lucide="house" class="w-4 h-4"></i> HOME
+                </a>
                 <div class="dropdown">
-                    <button><i data-lucide="gamepad-2" class="w-4 h-4"></i> GAMES <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button>
+                        <i data-lucide="gamepad-2" class="w-4 h-4"></i> GAMES <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                    </button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_games')"><i data-lucide="playstation" class="w-4 h-4"></i> PlayStation Games</a>
-                        <a href="#" onclick="loadConfig('xbox_games')"><i data-lucide="xbox" class="w-4 h-4"></i> Xbox Games</a>
+                        <a href="#" onclick="loadConfig('ps_games')"><i data-lucide="layout-grid" class="w-4 h-4"></i> PlayStation Games</a>
+                        <a href="#" onclick="loadConfig('xbox_games')"><i data-lucide="layout-grid" class="w-4 h-4"></i> Xbox Games</a>
                         <a href="#" onclick="loadConfig('pc_games')"><i data-lucide="monitor" class="w-4 h-4"></i> PC / Steam Games</a>
                     </div>
                 </div>
-
                 <div class="dropdown">
-                    <button><i data-lucide="refresh-cw" class="w-4 h-4"></i> SUBSCRIPTIONS <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button>
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i> SUBSCRIPTIONS <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                    </button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="layers" class="w-4 h-4"></i> PlayStation Plus</a>
-                        <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="box" class="w-4 h-4"></i> Xbox Game Pass</a>
-                        <a href="#" onclick="loadConfig('pc_subs')"><i data-lucide="cpu" class="w-4 h-4"></i> PC Subscriptions</a>
+                        <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="layout-grid" class="w-4 h-4"></i> PS Plus</a>
+                        <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="layout-grid" class="w-4 h-4"></i> Xbox Game Pass</a>
+                        <a href="#" onclick="loadConfig('pc_subs')"><i data-lucide="monitor" class="w-4 h-4"></i> PC Subscriptions</a>
                     </div>
                 </div>
-
                 <div class="dropdown">
-                    <button><i data-lucide="credit-card" class="w-4 h-4"></i> GIFT CARDS <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button>
+                        <i data-lucide="ticket" class="w-4 h-4"></i> GIFT CARDS <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                    </button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="ticket" class="w-4 h-4"></i> PSN Gift Cards</a>
-                        <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="ticket" class="w-4 h-4"></i> Xbox Gift Cards</a>
-                        <a href="#" onclick="loadConfig('pc_cards')"><i data-lucide="steam" class="w-4 h-4 text-blue-400"></i> Steam Gift Cards</a>
+                        <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="layout-grid" class="w-4 h-4"></i> PSN Gift Cards</a>
+                        <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="layout-grid" class="w-4 h-4"></i> Xbox Gift Cards</a>
+                        <a href="#" onclick="loadConfig('pc_cards')"><i data-lucide="monitor" class="w-4 h-4"></i> Steam Gift Cards</a>
                     </div>
                 </div>
             </div>
@@ -127,22 +128,22 @@
             </div>
             
             <section class="mb-20">
-                <h2 class="flex items-center gap-3 text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">
-                    <i data-lucide="sparkles"></i> Random Games
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
+                    <i data-lucide="gamepad-2"></i> Random Games
                 </h2>
                 <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
             </section>
 
             <section class="mb-20">
-                <h2 class="flex items-center gap-3 text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">
-                    <i data-lucide="zap"></i> Random Subscriptions
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
+                    <i data-lucide="refresh-cw"></i> Random Subscriptions
                 </h2>
                 <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
             </section>
 
             <section class="mb-20">
-                <h2 class="flex items-center gap-3 text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500">
-                    <i data-lucide="gift"></i> Random Gift Cards
+                <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
+                    <i data-lucide="ticket"></i> Random Gift Cards
                 </h2>
                 <div id="random-cards-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10"></div>
             </section>
@@ -150,17 +151,16 @@
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500"></h2>
+                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 flex items-center gap-4"></h2>
                 
                 <div class="flex gap-4">
                     <button class="filter-btn" onclick="sortItems('name')"><i data-lucide="sort-asc" class="w-4 h-4"></i> Sort A-Z</button>
-                    <button class="filter-btn" onclick="sortItems('price-low')"><i data-lucide="trending-down" class="w-4 h-4"></i> Price: Low</button>
-                    <button class="filter-btn" onclick="sortItems('price-high')"><i data-lucide="trending-up" class="w-4 h-4"></i> Price: High</button>
+                    <button class="filter-btn" onclick="sortItems('price-low')"><i data-lucide="trending-up" class="w-4 h-4"></i> Price: Low-High</button>
+                    <button class="filter-btn" onclick="sortItems('price-high')"><i data-lucide="trending-down" class="w-4 h-4"></i> Price: High-Low</button>
                 </div>
             </div>
             
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
-            
             <div id="pagination" class="pb-32"></div>
         </div>
     </div>
@@ -175,9 +175,9 @@
                 <p class="text-gray-500 text-sm">Official Gaming Digital Marketplace © 2026</p>
             </div>
             <div class="flex gap-8 font-bold text-xs uppercase tracking-widest text-gray-400">
-                <a href="#" class="hover:text-blue-500">Terms</a>
-                <a href="#" class="hover:text-blue-500">Privacy</a>
-                <a href="#" class="hover:text-blue-500">Contact</a>
+                <a href="#" class="hover:text-blue-500 flex items-center gap-2"><i data-lucide="file-text" class="w-3 h-3"></i> Terms</a>
+                <a href="#" class="hover:text-blue-500 flex items-center gap-2"><i data-lucide="shield-check" class="w-3 h-3"></i> Privacy</a>
+                <a href="#" class="hover:text-blue-500 flex items-center gap-2"><i data-lucide="mail" class="w-3 h-3"></i> Contact</a>
             </div>
         </div>
     </footer>
@@ -255,7 +255,6 @@
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const paginatedItems = currentData.slice(start, end);
-            
             document.getElementById('product-grid').innerHTML = paginatedItems.map(p => createCard(p)).join('');
             renderPagination();
             lucide.createIcons();
@@ -280,31 +279,20 @@
             const container = document.getElementById('pagination');
             container.innerHTML = '';
             if(pageCount <= 1) return;
-
             container.appendChild(createPageBtn(currentPage - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', false, currentPage === 1));
-
-            const delta = 1; 
-            const range = [];
-            for (let i = 1; i <= pageCount; i++) {
-                if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) {
-                    range.push(i);
-                }
-            }
-
+            
             let l;
-            for (let i of range) {
-                if (l) {
-                    if (i - l === 2) {
-                        container.appendChild(createPageBtn(l + 1, l + 1));
-                    } else if (i - l !== 1) {
+            for (let i = 1; i <= pageCount; i++) {
+                if (i === 1 || i === pageCount || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    if (l && i - l !== 1) {
                         const dots = document.createElement('span');
                         dots.innerText = '...';
-                        dots.className = 'page-dots';
+                        dots.className = 'text-white/30 px-2';
                         container.appendChild(dots);
                     }
+                    container.appendChild(createPageBtn(i, i, i === currentPage));
+                    l = i;
                 }
-                container.appendChild(createPageBtn(i, i, i === currentPage));
-                l = i;
             }
 
             container.appendChild(createPageBtn(currentPage + 1, '<i data-lucide="chevron-right" class="w-4 h-4"></i>', false, currentPage === pageCount));
