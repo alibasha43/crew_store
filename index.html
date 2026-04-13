@@ -8,7 +8,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
@@ -17,15 +16,14 @@
             color: #fff;
             min-height: 100vh;
         }
-
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
         .dropdown:hover .dropdown-menu { display: block; }
+        .product-card { transition: all 0.3s ease; }
         .product-card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.5); }
     </style>
 </head>
@@ -57,13 +55,6 @@
                         <a href="#" onclick="filterSheet('Subscriptions', 'Xbox')" class="block py-2 hover:text-blue-500">Game Pass</a>
                     </div>
                 </div>
-                <div class="relative dropdown">
-                    <button class="hover:text-blue-500 flex items-center gap-1 uppercase">Gift Cards <i data-lucide="chevron-down" class="w-4 h-4"></i></button>
-                    <div class="dropdown-menu hidden absolute bg-[#0a0a0a] border border-white/10 p-4 w-48 mt-2 rounded-xl shadow-2xl">
-                        <a href="#" onclick="filterSheet('GiftCards', 'Steam')" class="block py-2 hover:text-blue-500">Steam Cards</a>
-                        <a href="#" onclick="filterSheet('GiftCards', 'PlayStation')" class="block py-2 hover:text-blue-500">PSN Cards</a>
-                    </div>
-                </div>
             </div>
 
             <div class="relative w-64">
@@ -75,25 +66,14 @@
 
     <div id="content" class="pt-32 min-h-screen">
         <div id="home-view" class="max-w-7xl mx-auto px-6 text-center py-20">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight uppercase leading-none">
-                CREW <span class="text-blue-500">STORE</span><br>OFFICIAL
-            </h1>
-            <p class="text-gray-400 text-xl mb-12 max-w-2xl mx-auto italic">
-                Get your digital assets instantly. Manual delivery via WhatsApp for 100% security.
-            </p>
-            <div class="flex justify-center gap-4">
-                <button onclick="filterSheet('PlayStation')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition neon-blue uppercase tracking-tighter">Enter Store</button>
-            </div>
+            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight uppercase leading-none">CREW <span class="text-blue-500">STORE</span></h1>
+            <button onclick="filterSheet('PlayStation')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition neon-blue uppercase">Enter Store</button>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden pb-20">
-            <div class="flex items-center gap-4 mb-10">
-                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500">Armory</h2>
-                <div class="h-px flex-grow bg-white/10"></div>
-            </div>
+            <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-10">Armory</h2>
             <div id="loading-state" class="text-center py-20 hidden">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-                <p class="mt-4 text-gray-400">Loading your games...</p>
             </div>
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
         </div>
@@ -101,65 +81,74 @@
 
     <script>
         const SHEET_ID = '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8'; 
-        const WHATSAPP_NUMBER = '964000000000'; // Replace with your number
+        const WHATSAPP_NUMBER = '964000000000'; 
 
         async function fetchSheetData(tabName) {
-            toggleLoading(true);
+            document.getElementById('loading-state').classList.remove('hidden');
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${tabName}`;
             try {
                 const response = await fetch(url);
                 const data = await response.text();
                 return parseCSV(data);
             } catch (e) {
+                console.error("Fetch error:", e);
                 return [];
             } finally {
-                toggleLoading(false);
+                document.getElementById('loading-state').classList.add('hidden');
             }
         }
 
         function parseCSV(csv) {
             const lines = csv.split('\n');
-            const result = [];
-            if(lines.length < 2) return [];
+            if (lines.length < 2) return [];
+            
+            // This parts cleans up the headers to avoid "undefined"
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-            for (let i = 1; i < lines.length; i++) {
-                const obj = {};
-                const currentline = lines[i].split(',');
-                headers.forEach((h, index) => {
-                    obj[h] = currentline[index]?.replace(/"/g, '').trim();
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // Better CSV split
+                const row = {};
+                headers.forEach((header, i) => {
+                    row[header] = values[i] ? values[i].replace(/"/g, '').trim() : "";
                 });
-                result.push(obj);
-            }
-            return result;
+                return row;
+            });
         }
 
         async function filterSheet(tab, platformFilter = '') {
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('product-view').classList.remove('hidden');
-            document.getElementById('category-title').innerText = platformFilter ? `${platformFilter} ${tab}` : tab;
+            document.getElementById('category-title').innerText = tab;
             
             const products = await fetchSheetData(tab);
             const grid = document.getElementById('product-grid');
-            const filtered = platformFilter ? products.filter(p => p.Platform === platformFilter) : products;
+            
+            const filtered = platformFilter 
+                ? products.filter(p => p.Platform === platformFilter) 
+                : products;
 
-            grid.innerHTML = filtered.map(p => `
-                <div class="glass p-4 rounded-2xl border border-white/5 transition-all duration-300 product-card group">
-                    <img src="${p.ImageURL || 'https://via.placeholder.com/300'}" class="w-full h-56 object-cover rounded-xl mb-4 group-hover:scale-105 transition duration-500 shadow-lg">
-                    <h3 class="font-bold text-lg mb-1 truncate">${p.Name}</h3>
+            grid.innerHTML = filtered.map(p => {
+                // FALLBACKS: If "Name" is undefined, it tries "name"
+                const name = p.Name || p.name || "Unknown Product";
+                const price = p.Price || p.price || "0.00";
+                const img = p.ImageURL || p.imageurl || "https://via.placeholder.com/300";
+
+                return `
+                <div class="glass p-4 rounded-2xl border border-white/5 product-card group">
+                    <img src="${img}" class="w-full h-56 object-cover rounded-xl mb-4 group-hover:scale-105 transition duration-500">
+                    <h3 class="font-bold text-lg mb-1 truncate">${name}</h3>
                     <div class="flex justify-between items-center mt-4">
-                        <span class="text-2xl font-black text-blue-500">$${p.Price}</span>
-                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(p.Name)}" target="_blank" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
+                        <span class="text-2xl font-black text-blue-500">$${price}</span>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" target="_blank" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl transition neon-blue">
                             <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
                         </a>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
             lucide.createIcons();
         }
 
         function searchProducts() {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('product-view').classList.remove('hidden');
             let input = document.getElementById('mainSearch').value.toLowerCase();
             let cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
@@ -173,11 +162,6 @@
                 document.getElementById('home-view').classList.remove('hidden');
                 document.getElementById('product-view').classList.add('hidden');
             }
-        }
-
-        function toggleLoading(show) {
-            document.getElementById('loading-state').classList.toggle('hidden', !show);
-            if (show) document.getElementById('product-grid').innerHTML = '';
         }
 
         lucide.createIcons();
