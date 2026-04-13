@@ -63,10 +63,13 @@
         }
         .social-btn:hover { background: #3b82f6; color: white; transform: translateY(-3px); }
         
-        /* Local Payment Icons Styling */
-        .iraq-payments { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; opacity: 0.7; transition: 0.5s; }
-        .iraq-payments:hover { opacity: 1; }
-        .payment-logo { height: 24px; object-fit: contain; }
+        /* Payment Method Badges */
+        .payment-tag {
+            font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; 
+            background: rgba(255,255,255,0.05); color: #8a8a8a; border: 1px solid rgba(255,255,255,0.05);
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        }
+        .payment-tag:hover { border-color: #3b82f6; color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
     </style>
 </head>
 <body>
@@ -142,10 +145,9 @@
                         The ultimate destination for digital gaming assets, premium accounts, and game subscriptions. Fast delivery and professional support.
                     </p>
                     <div class="flex gap-3">
-                        <a href="https://wa.me/9647718168589" target="_blank" class="social-btn"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
-                        <a href="https://www.facebook.com/CrewStore91" target="_blank" class="social-btn"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                        <a href="https://www.instagram.com/crewst0re" target="_blank" class="social-btn"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                        <a href="https://t.me/crewst0re" target="_blank" class="social-btn"><i data-lucide="send" class="w-5 h-5"></i></a>
+                        <a href="https://wa.me/9647718168589" target="_blank" class="social-btn"><i data-lucide="message-square"></i></a>
+                        <a href="https://www.facebook.com/CrewStore91" target="_blank" class="social-btn"><i data-lucide="facebook"></i></a>
+                        <a href="https://www.instagram.com/crewst0re" target="_blank" class="social-btn"><i data-lucide="instagram"></i></a>
                     </div>
                 </div>
 
@@ -180,15 +182,18 @@
             </div>
 
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">
-                    COPYRIGHT © 2026 - ALL RIGHTS RESERVED BY <span class="text-blue-500">CREW STORE</span>
-                </p>
-                <div class="iraq-payments">
-                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/FastPay.png" class="payment-logo" alt="FastPay">
-                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/FIB.png" class="payment-logo" alt="FIB">
-                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/ZainCash.png" class="payment-logo" alt="Zain Cash">
-                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/Asiacell.png" class="payment-logo" alt="Asiacell">
-                    <img src="https://raw.githubusercontent.com/HassanCrew/CrewStore/main/QiCard.png" class="payment-logo" alt="Qi Card">
+                <div class="flex flex-col gap-2">
+                    <p class="text-gray-600 text-xs uppercase tracking-widest font-bold">
+                        COPYRIGHT © 2026 - ALL RIGHTS RESERVED BY <span class="text-blue-500">CREW STORE</span>
+                    </p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="payment-tag">Qi Card</span>
+                    <span class="payment-tag">Zain Cash</span>
+                    <span class="payment-tag">Asiacell</span>
+                    <span class="payment-tag">FastPay</span>
+                    <span class="payment-tag">FIB</span>
                 </div>
             </div>
         </div>
