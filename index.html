@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crew Store Catalog</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; padding: 20px; }
+        .search-box { width: 100%; padding: 15px; border-radius: 12px; border: none; margin-bottom: 20px; font-size: 18px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: #1e293b; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #334155; }
+        .card img { width: 100%; border-radius: 8px; height: 200px; object-fit: cover; }
+        .price { color: #38bdf8; font-weight: bold; margin-top: 10px; display: block; }
+        .buy-btn { background: #25d366; color: white; padding: 8px; border-radius: 5px; text-decoration: none; display: block; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center;">CREW STORE</h2>
+    <input type="text" id="searchInput" class="search-box" placeholder="Search 5,000+ games..." onkeyup="searchGames()">
+
+    <div class="grid" id="gameGrid">
+        </div>
+
+    <script>
+        let gamesData = [];
+
+        // Load your CSV file
+        Papa.parse("games.csv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                gamesData = results.data;
+                displayGames(gamesData);
+            }
+        });
+
+        function displayGames(games) {
+            const grid = document.getElementById('gameGrid');
+            grid.innerHTML = games.map(game => `
+                <div class="card">
+                    <img src="${game['الصورة'] || 'https://via.placeholder.com/150'}" alt="game">
+                    <div style="font-size: 14px; margin-top: 8px; height: 40px; overflow: hidden;">${game['اسم اللعبة']}</div>
+                    <span class="price">${game['السعر بالدينار']}</span>
+                    <a href="https://wa.me/YOUR_NUMBER" class="buy-btn">Order on WhatsApp</a>
+                </div>
+            `).join('');
+        }
+
+        function searchGames() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = gamesData.filter(g => g['اسم اللعبة'].toLowerCase().includes(term));
+            displayGames(filtered);
+        }
+    </script>
+</body>
+</html>
