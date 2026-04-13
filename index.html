@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crew Store | Official</title>
     <link rel="icon" type="image/png" href="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -75,10 +74,8 @@
     <nav class="glass">
         <div class="nav-container">
             <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
-                <div class="w-10 h-10 overflow-hidden rounded-xl flex items-center justify-center neon-blue group-hover:rotate-12 transition">
-                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" 
-                         alt="Crew Store Logo" 
-                         class="w-full h-full object-cover">
+                <div class="w-12 h-12 flex items-center justify-center transition group-hover:scale-110 duration-300">
+                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Crew Store Logo" class="w-full h-full object-contain">
                 </div>
                 <span class="text-xl font-black uppercase tracking-tighter brand-neon">CREW<span class="text-blue-500">STORE</span></span>
             </div>
@@ -162,7 +159,7 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex flex-col items-center md:items-start gap-2">
                 <div class="flex items-center gap-2">
-                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" class="w-6 h-6 object-contain" alt="Logo">
+                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Logo" class="w-8 h-8 object-contain">
                     <span class="text-2xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
                 </div>
                 <p class="text-gray-500 text-sm">Official Gaming Digital Marketplace © 2026</p>
@@ -274,9 +271,11 @@
             container.innerHTML = '';
             if(pageCount <= 1) return;
 
+            // Prev Arrow
             container.appendChild(createPageBtn(currentPage - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', false, currentPage === 1));
 
-            const delta = 1;
+            // Page Numbers Logic
+            const delta = 1; 
             const range = [];
             for (let i = 1; i <= pageCount; i++) {
                 if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) {
@@ -300,6 +299,7 @@
                 l = i;
             }
 
+            // Next Arrow
             container.appendChild(createPageBtn(currentPage + 1, '<i data-lucide="chevron-right" class="w-4 h-4"></i>', false, currentPage === pageCount));
             lucide.createIcons();
         }
