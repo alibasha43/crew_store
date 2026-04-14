@@ -75,6 +75,13 @@
             top: 0;
             width: 100%;
             z-index: 1000;
+            transition: transform 0.35s ease, opacity 0.35s ease, background 0.35s ease;
+            will-change: transform;
+        }
+
+        nav.nav-hidden {
+            transform: translateY(calc(-100% - 10px));
+            opacity: 0;
         }
 
         .nav-container {
@@ -288,7 +295,7 @@
             z-index: 2;
             min-height: 100vh;
             display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
+            grid-template-columns: minmax(0, 0.95fr) minmax(460px, 1.05fr);
             align-items: center;
             gap: 28px;
             padding: 110px 56px 42px;
@@ -404,6 +411,7 @@
             justify-content: center;
             align-items: end;
             min-height: 720px;
+            padding-right: 12px;
         }
 
         .kratos-aura {
@@ -429,23 +437,24 @@
         .kratos-crop {
             position: relative;
             z-index: 2;
-            width: min(100%, 760px);
-            height: 720px;
+            width: min(100%, 700px);
+            height: 760px;
             overflow: hidden;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: flex-end;
             mask-image: linear-gradient(180deg, black 0 82%, transparent 100%);
+            animation: heroFloat 6.5s ease-in-out infinite;
         }
 
         .hero-visual img {
             position: relative;
-            width: 100%;
+            width: 112%;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.72));
-            animation: heroFloat 6.5s ease-in-out infinite;
-            transform: translateY(74px) scale(1.08);
+            transform: translateX(8%) translateY(36px) scale(1.04);
+            transform-origin: bottom center;
         }
 
         @keyframes heroFloat {
@@ -666,11 +675,36 @@
             .hero-copy { max-width: 100%; }
             .hero-visual { min-height: 560px; }
             .kratos-frame { inset: 10% 8% 10%; }
-            .kratos-crop { height: 560px; }
+            .kratos-crop {
+                width: min(100%, 620px);
+                height: 620px;
+                justify-content: center;
+            }
+
+            .hero-visual img {
+                width: 108%;
+                transform: translateX(2%) translateY(24px) scale(1.03);
+            }
         }
 
         @media (max-width: 768px) {
-            .nav-links { gap: 16px; }
+            .nav-container {
+                gap: 14px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                width: 100%;
+            }
+
+            .nav-links a,
+            .nav-links button {
+                font-size: 10px;
+                letter-spacing: 0.12em;
+            }
+
             .search-container { width: 100%; }
             .hero-shell {
                 min-height: 100svh;
@@ -685,6 +719,10 @@
             }
 
             .hero-lead { font-size: 0.98rem; }
+            .hero-grid {
+                padding: 108px 18px 24px;
+                gap: 18px;
+            }
 
             .hero-actions {
                 flex-direction: column;
@@ -693,10 +731,19 @@
 
             .hero-btn { justify-content: center; }
             .hero-stats { grid-template-columns: 1fr; }
-            .hero-visual { min-height: 470px; }
+            .hero-visual {
+                min-height: 440px;
+                padding-right: 0;
+            }
             .kratos-crop {
-                height: 470px;
-                width: min(100%, 520px);
+                height: 430px;
+                width: min(100%, 420px);
+                justify-content: center;
+            }
+
+            .hero-visual img {
+                width: 118%;
+                transform: translateX(0) translateY(16px) scale(1.01);
             }
 
             .hero-panel {
@@ -704,6 +751,21 @@
                 right: 14px;
                 bottom: 14px;
                 padding: 18px;
+            }
+
+            .hero-panel p {
+                font-size: 0.84rem;
+                line-height: 1.55;
+            }
+
+            .dropdown {
+                padding: 14px 0;
+            }
+
+            .dropdown-menu {
+                top: 48px;
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
     </style>
@@ -938,6 +1000,7 @@
         let currentData = [];
         let currentPage = 1;
         const itemsPerPage = 24;
+        let lastScrollY = 0;
 
         async function fetchCSV(sheetId, tabName) {
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
@@ -1112,6 +1175,25 @@
             setTimeout(() => lucide.createIcons(), 100);
         }
 
+        function handleHeaderVisibility() {
+            const nav = document.querySelector('nav');
+            if (!nav) return;
+
+            const currentScrollY = window.scrollY || window.pageYOffset;
+            const revealThreshold = 30;
+            const hideThreshold = 120;
+
+            if (currentScrollY <= revealThreshold) {
+                nav.classList.remove('nav-hidden');
+            } else if (currentScrollY > lastScrollY && currentScrollY > hideThreshold) {
+                nav.classList.add('nav-hidden');
+            } else if (currentScrollY < lastScrollY) {
+                nav.classList.remove('nav-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        }
+
         function renderParticles() {
             const container = document.getElementById('hero-particles');
             if (!container) return;
@@ -1132,7 +1214,10 @@
             renderParticles();
             loadHome();
             lucide.createIcons();
+            handleHeaderVisibility();
         };
+
+        window.addEventListener('scroll', handleHeaderVisibility, { passive: true });
     </script>
 </body>
 </html>
