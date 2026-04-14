@@ -142,6 +142,7 @@
         }
 
         .dropdown { position: relative; padding: 31px 0; }
+        .dropdown.open .dropdown-menu { display: block; }
 
         .dropdown-menu {
             display: none;
@@ -155,6 +156,7 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+            z-index: 1010;
         }
 
         .dropdown:hover .dropdown-menu { display: block; }
@@ -209,15 +211,15 @@
         .hero-shell {
             position: relative;
             min-height: 100vh;
-            width: calc(100vw - 28px);
-            margin-left: calc(50% - 50vw + 14px);
-            margin-right: calc(50% - 50vw + 14px);
-            border-radius: 34px;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            border-radius: 0 0 34px 34px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
             background:
-                linear-gradient(90deg, rgba(4, 8, 13, 0.9) 0%, rgba(4, 8, 13, 0.52) 42%, rgba(4, 8, 13, 0.85) 100%),
+                linear-gradient(90deg, rgba(4, 8, 13, 0.86) 0%, rgba(4, 8, 13, 0.42) 42%, rgba(4, 8, 13, 0.78) 100%),
                 url('https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg') center/cover;
             isolation: isolate;
         }
@@ -229,7 +231,7 @@
             background:
                 radial-gradient(circle at 18% 24%, rgba(159, 218, 255, 0.17), transparent 26%),
                 radial-gradient(circle at 68% 22%, rgba(255, 255, 255, 0.08), transparent 18%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%, rgba(4, 8, 13, 0.4) 100%);
+                linear-gradient(180deg, rgba(6, 11, 18, 0.15) 0%, transparent 20%, rgba(6, 11, 18, 0.18) 62%, rgba(7, 13, 20, 0.92) 100%);
             pointer-events: none;
             z-index: 0;
         }
@@ -237,10 +239,12 @@
         .hero-shell::after {
             content: "";
             position: absolute;
-            inset: auto -10% -20% 15%;
-            height: 280px;
-            background: radial-gradient(circle, rgba(116, 191, 255, 0.2), transparent 68%);
-            filter: blur(40px);
+            inset: auto 0 0 0;
+            height: 240px;
+            background:
+                linear-gradient(180deg, rgba(7, 13, 20, 0) 0%, rgba(7, 13, 20, 0.8) 70%, rgba(7, 13, 20, 1) 100%),
+                radial-gradient(circle at 70% 18%, rgba(116, 191, 255, 0.16), transparent 36%);
+            filter: blur(8px);
             z-index: 0;
         }
 
@@ -408,10 +412,10 @@
         .hero-visual {
             position: relative;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: end;
             min-height: 720px;
-            padding-right: 12px;
+            padding-right: 0;
         }
 
         .kratos-aura {
@@ -426,7 +430,7 @@
 
         .kratos-frame {
             position: absolute;
-            inset: 13% 0 14% 16%;
+            inset: 12% -2% 18% 24%;
             border-radius: 34px;
             border: 1px solid rgba(255, 255, 255, 0.09);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
@@ -437,23 +441,23 @@
         .kratos-crop {
             position: relative;
             z-index: 2;
-            width: min(100%, 700px);
-            height: 760px;
+            width: min(100%, 820px);
+            height: 780px;
             overflow: hidden;
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
-            mask-image: linear-gradient(180deg, black 0 82%, transparent 100%);
+            mask-image: linear-gradient(180deg, black 0 84%, transparent 100%);
             animation: heroFloat 6.5s ease-in-out infinite;
         }
 
         .hero-visual img {
             position: relative;
-            width: 112%;
+            width: 118%;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.72));
-            transform: translateX(8%) translateY(36px) scale(1.04);
+            transform: translateX(18%) translateY(72px) scale(1.08);
             transform-origin: bottom center;
         }
 
@@ -673,22 +677,27 @@
             }
 
             .hero-copy { max-width: 100%; }
-            .hero-visual { min-height: 560px; }
+            .hero-visual {
+                min-height: 560px;
+                justify-content: center;
+            }
             .kratos-frame { inset: 10% 8% 10%; }
             .kratos-crop {
-                width: min(100%, 620px);
-                height: 620px;
+                width: min(100%, 680px);
+                height: 640px;
                 justify-content: center;
             }
 
             .hero-visual img {
-                width: 108%;
-                transform: translateX(2%) translateY(24px) scale(1.03);
+                width: 112%;
+                transform: translateX(4%) translateY(40px) scale(1.04);
             }
         }
 
         @media (max-width: 768px) {
             .nav-container {
+                flex-direction: column;
+                align-items: stretch;
                 gap: 14px;
                 padding-left: 14px;
                 padding-right: 14px;
@@ -708,10 +717,10 @@
             .search-container { width: 100%; }
             .hero-shell {
                 min-height: 100svh;
-                width: calc(100vw - 16px);
-                margin-left: calc(50% - 50vw + 8px);
-                margin-right: calc(50% - 50vw + 8px);
-                border-radius: 24px;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                margin-right: calc(50% - 50vw);
+                border-radius: 0 0 24px 24px;
             }
 
             .hero-copy h1 {
@@ -732,18 +741,18 @@
             .hero-btn { justify-content: center; }
             .hero-stats { grid-template-columns: 1fr; }
             .hero-visual {
-                min-height: 440px;
+                min-height: 420px;
                 padding-right: 0;
             }
             .kratos-crop {
-                height: 430px;
-                width: min(100%, 420px);
+                height: 420px;
+                width: min(100%, 460px);
                 justify-content: center;
             }
 
             .hero-visual img {
-                width: 118%;
-                transform: translateX(0) translateY(16px) scale(1.01);
+                width: 124%;
+                transform: translateX(7%) translateY(44px) scale(1.03);
             }
 
             .hero-panel {
@@ -759,13 +768,22 @@
             }
 
             .dropdown {
-                padding: 14px 0;
+                padding: 8px 0;
             }
 
             .dropdown-menu {
-                top: 48px;
-                left: 50%;
-                transform: translateX(-50%);
+                top: calc(100% + 8px);
+                left: 0;
+                transform: none;
+                min-width: min(240px, 82vw);
+            }
+
+            #random-games-grid,
+            #random-subs-grid,
+            #random-cards-grid,
+            #product-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
             }
         }
     </style>
@@ -783,27 +801,27 @@
             <div class="nav-links">
                 <a href="#" onclick="showPage('home')"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
                 <div class="dropdown">
-                    <button><i data-lucide="gamepad-2" class="w-4 h-4"></i> Games <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button onclick="toggleDropdown(event)"><i data-lucide="gamepad-2" class="w-4 h-4"></i> Games <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_games')"><i data-lucide="play" class="w-3 h-3"></i> PlayStation Games</a>
-                        <a href="#" onclick="loadConfig('xbox_games')"><i data-lucide="box" class="w-3 h-3"></i> Xbox Games</a>
-                        <a href="#" onclick="loadConfig('pc_games')"><i data-lucide="monitor" class="w-3 h-3"></i> PC / Steam Games</a>
+                        <a href="#" onclick="loadConfig('ps_games'); closeDropdowns();"><i data-lucide="play" class="w-3 h-3"></i> PlayStation Games</a>
+                        <a href="#" onclick="loadConfig('xbox_games'); closeDropdowns();"><i data-lucide="box" class="w-3 h-3"></i> Xbox Games</a>
+                        <a href="#" onclick="loadConfig('pc_games'); closeDropdowns();"><i data-lucide="monitor" class="w-3 h-3"></i> PC / Steam Games</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="layers-3" class="w-4 h-4"></i> Subscriptions <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button onclick="toggleDropdown(event)"><i data-lucide="layers-3" class="w-4 h-4"></i> Subscriptions <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="shield-plus" class="w-3 h-3"></i> PlayStation Plus</a>
-                        <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="badge-plus" class="w-3 h-3"></i> Xbox Game Pass</a>
-                        <a href="#" onclick="loadConfig('pc_subs')"><i data-lucide="orbit" class="w-3 h-3"></i> PC Subscriptions</a>
+                        <a href="#" onclick="loadConfig('ps_subs'); closeDropdowns();"><i data-lucide="shield-plus" class="w-3 h-3"></i> PlayStation Plus</a>
+                        <a href="#" onclick="loadConfig('xbox_subs'); closeDropdowns();"><i data-lucide="badge-plus" class="w-3 h-3"></i> Xbox Game Pass</a>
+                        <a href="#" onclick="loadConfig('pc_subs'); closeDropdowns();"><i data-lucide="orbit" class="w-3 h-3"></i> PC Subscriptions</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="ticket-percent" class="w-4 h-4"></i> Gift Cards <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button onclick="toggleDropdown(event)"><i data-lucide="ticket-percent" class="w-4 h-4"></i> Gift Cards <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> PSN Gift Cards</a>
-                        <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Xbox Gift Cards</a>
-                        <a href="#" onclick="loadConfig('pc_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Steam Gift Cards</a>
+                        <a href="#" onclick="loadConfig('ps_cards'); closeDropdowns();"><i data-lucide="wallet-cards" class="w-3 h-3"></i> PSN Gift Cards</a>
+                        <a href="#" onclick="loadConfig('xbox_cards'); closeDropdowns();"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Xbox Gift Cards</a>
+                        <a href="#" onclick="loadConfig('pc_cards'); closeDropdowns();"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Steam Gift Cards</a>
                     </div>
                 </div>
             </div>
@@ -1056,6 +1074,21 @@
             setText('category-count', `${count} ${count === 1 ? 'item' : 'items'}`);
         }
 
+        function closeDropdowns() {
+            document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+                dropdown.classList.remove('open');
+            });
+        }
+
+        function toggleDropdown(event) {
+            if (window.innerWidth > 768) return;
+            event.preventDefault();
+            const dropdown = event.currentTarget.closest('.dropdown');
+            const shouldOpen = !dropdown.classList.contains('open');
+            closeDropdowns();
+            if (shouldOpen) dropdown.classList.add('open');
+        }
+
         async function loadConfig(key) {
             showPage('product');
             document.getElementById('category-title').innerText = STORE_CONFIG[key].title;
@@ -1164,6 +1197,7 @@
         function showPage(page) {
             const home = document.getElementById('home-view');
             const prod = document.getElementById('product-view');
+            closeDropdowns();
             if (page === 'home') {
                 home.classList.remove('hidden');
                 prod.classList.add('hidden');
@@ -1218,6 +1252,12 @@
         };
 
         window.addEventListener('scroll', handleHeaderVisibility, { passive: true });
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.dropdown')) closeDropdowns();
+        });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeDropdowns();
+        });
     </script>
 </body>
 </html>
