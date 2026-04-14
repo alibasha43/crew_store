@@ -8,150 +8,636 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-dark: #05070b;
+            --bg-deep: #0a1118;
+            --glass: rgba(173, 216, 255, 0.09);
+            --glass-strong: rgba(205, 233, 255, 0.14);
+            --line: rgba(255, 255, 255, 0.12);
+            --ice: #9bd7ff;
+            --ice-strong: #e2f4ff;
+            --frost: #74bfff;
+            --ember: #d3523b;
+            --text: #eef6ff;
+            --muted: #a9bbcb;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #000;
-            color: #fff;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(116, 191, 255, 0.12), transparent 28%),
+                radial-gradient(circle at 80% 15%, rgba(211, 82, 59, 0.12), transparent 22%),
+                linear-gradient(rgba(3, 7, 12, 0.7), rgba(3, 7, 12, 0.92)),
+                url('https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg') center/cover fixed;
+            color: var(--text);
             min-height: 100vh;
             margin: 0;
             overflow-x: hidden;
         }
 
-        /* NEW CSS ADDITIONS */
-        .fade-in {
-            animation: fadeIn 1.5s ease forwards;
-        }
-        @keyframes fadeIn {
-            from {opacity:0; transform:translateY(30px);}
-            to {opacity:1; transform:translateY(0);}
-        }
-
-        .glow-pulse {
-            background: radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%);
-            filter: blur(120px);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%,100% {opacity:0.4;}
-            50% {opacity:0.8;}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(115deg, rgba(124, 203, 255, 0.06), transparent 40%),
+                linear-gradient(290deg, rgba(255, 255, 255, 0.05), transparent 38%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .btn-glow {
-            background: linear-gradient(135deg,#2563eb,#3b82f6);
-            box-shadow: 0 0 40px rgba(59,130,246,0.4);
-            position: relative;
-            overflow: hidden;
-            color: white;
+        nav {
+            height: 86px;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+
+        .glass {
+            background: linear-gradient(180deg, rgba(18, 29, 41, 0.72), rgba(8, 14, 22, 0.82));
+            backdrop-filter: blur(26px);
+            -webkit-backdrop-filter: blur(26px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.38);
+        }
+
+        .nav-shell { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a,
+        .nav-links button {
+            text-decoration: none;
+            color: rgba(238, 246, 255, 0.92);
             font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.25s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s ease;
-        }
-        .btn-glow:hover { transform: scale(1.05); }
-        .btn-glow::after {
-            content:'';
-            position:absolute;
-            width:200%;
-            height:200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
-            top:-50%;
-            left:-50%;
-            animation: energy 4s linear infinite;
-        }
-        @keyframes energy {
-            from {transform: rotate(0);}
-            to {transform: rotate(360deg);}
         }
 
-        #embers {
-            position:absolute;
-            width:100%;
-            height:100%;
-            top:0;
-            left:0;
-            pointer-events:none;
-            z-index: 10;
+        .nav-links a:hover,
+        .nav-links button:hover {
+            color: var(--ice-strong);
+            text-shadow: 0 0 20px rgba(155, 215, 255, 0.45);
         }
 
-        .parallax-bg {
-            transition: transform 0.2s ease-out;
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 24px rgba(155, 215, 255, 0.28);
         }
 
-        .glass-hero {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        .dropdown { position: relative; padding: 31px 0; }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            min-width: 220px;
+            border-radius: 18px;
+            padding: 10px 0;
+            background: rgba(11, 18, 26, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
         }
 
-        /* EXISTING CSS */
-        nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .glass { background: rgba(15, 15, 15, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a, .nav-links button { 
-            text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; 
-            background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
-            text-shadow: 0 0 8px rgba(255,255,255,0.3); transition: 0.3s;
-        }
-        .nav-links a:hover, .nav-links button:hover { color: #3b82f6; text-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
-        
-        .brand-neon { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-
-        .dropdown { position: relative; padding: 30px 0; }
-        .dropdown-menu { 
-            display: none; position: absolute; top: 80px; left: 0; 
-            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); 
-            min-width: 220px; border-radius: 12px; padding: 10px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
         .dropdown:hover .dropdown-menu { display: block; }
-        .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; text-shadow: none; }
-        .dropdown-menu a:hover { background: #2563eb; color: white; text-shadow: none; }
 
-        .search-container { position: relative; width: 220px; display: flex; align-items: center; }
-        .search-container input { 
-            width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px;
-        }
-        .search-container i { 
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
-            color: #3b82f6; width: 16px; height: 16px; pointer-events: none; 
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            font-size: 11px;
+            text-shadow: none;
         }
 
-        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
-        
-        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-        
-        .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
-        .filter-btn:hover { background: #2563eb; border-color: #2563eb; }
-        
-        #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 2rem; }
-        .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; font-weight: 600; }
-        .page-btn:hover:not(.disabled) { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
-        .page-btn.active { background: #2563eb; border-color: #2563eb; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
-        .page-dots { color: rgba(255,255,255,0.3); padding: 0 5px; }
-        .page-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+        .dropdown-menu a:hover {
+            background: rgba(116, 191, 255, 0.18);
+            color: white;
+        }
+
+        .search-container {
+            position: relative;
+            width: 240px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .search-container input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            padding: 10px 16px 10px 42px;
+            color: white;
+            outline: none;
+            font-size: 13px;
+            backdrop-filter: blur(16px);
+        }
+
+        .search-container input::placeholder { color: rgba(255, 255, 255, 0.46); }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ice);
+            width: 16px;
+            height: 16px;
+            pointer-events: none;
+        }
+
+        .hero-shell {
+            position: relative;
+            min-height: calc(100vh - 120px);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+            background:
+                linear-gradient(90deg, rgba(4, 8, 13, 0.9) 0%, rgba(4, 8, 13, 0.52) 42%, rgba(4, 8, 13, 0.85) 100%),
+                url('https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg') center/cover;
+            isolation: isolate;
+        }
+
+        .hero-shell::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 24%, rgba(159, 218, 255, 0.17), transparent 26%),
+                radial-gradient(circle at 68% 22%, rgba(255, 255, 255, 0.08), transparent 18%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%, rgba(4, 8, 13, 0.4) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-shell::after {
+            content: "";
+            position: absolute;
+            inset: auto -10% -20% 15%;
+            height: 280px;
+            background: radial-gradient(circle, rgba(116, 191, 255, 0.2), transparent 68%);
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .rune-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.8), transparent 82%);
+            opacity: 0.28;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(230, 246, 255, 0.9), rgba(116, 191, 255, 0.15) 65%, transparent 72%);
+            left: var(--left);
+            top: var(--top);
+            opacity: var(--opacity);
+            filter: blur(1px);
+            animation: drift var(--duration) linear infinite;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes drift {
+            0% { transform: translate3d(0, 0, 0) scale(0.9); }
+            50% { transform: translate3d(18px, -28px, 0) scale(1); }
+            100% { transform: translate3d(-8px, -56px, 0) scale(0.92); }
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            min-height: calc(100vh - 120px);
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 28px;
+            padding: 72px 56px 42px;
+        }
+
+        .hero-copy { max-width: 640px; }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(226, 244, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--ice-strong);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-copy h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            line-height: 0.9;
+            margin: 0 0 18px;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            text-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+        }
+
+        .frost { color: var(--ice-strong); }
+
+        .hero-lead {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 560px;
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .hero-btn:hover { transform: translateY(-2px); }
+
+        .hero-btn.primary {
+            background: linear-gradient(135deg, rgba(123, 203, 255, 0.95), rgba(78, 151, 223, 0.95));
+            color: #02111d;
+            box-shadow: 0 18px 40px rgba(116, 191, 255, 0.28);
+        }
+
+        .hero-btn.secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            max-width: 620px;
+        }
+
+        .stat-card {
+            padding: 18px;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(18px);
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--ice-strong);
+            margin-bottom: 6px;
+        }
+
+        .stat-card span {
+            display: block;
+            color: rgba(238, 246, 255, 0.62);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            min-height: 720px;
+        }
+
+        .kratos-aura {
+            position: absolute;
+            inset: 8% 2% 10%;
+            border-radius: 40px;
+            background:
+                radial-gradient(circle at 50% 35%, rgba(219, 242, 255, 0.18), transparent 34%),
+                radial-gradient(circle at 50% 80%, rgba(86, 154, 213, 0.18), transparent 38%);
+            filter: blur(28px);
+        }
+
+        .kratos-frame {
+            position: absolute;
+            inset: 13% 0 14% 16%;
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(18px);
+            box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.03);
+        }
+
+        .hero-visual img {
+            position: relative;
+            z-index: 2;
+            width: min(100%, 760px);
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.72));
+            animation: heroFloat 6.5s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-panel {
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            bottom: 6%;
+            z-index: 3;
+            padding: 22px 24px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(12, 20, 29, 0.7), rgba(12, 20, 29, 0.56));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(22px);
+            box-shadow: 0 24px 44px rgba(0, 0, 0, 0.34);
+        }
+
+        .hero-panel-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-panel-top strong {
+            font-size: 0.95rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .hero-panel-top span {
+            color: var(--ice);
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            width: 78%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--ice), white);
+            box-shadow: 0 0 22px rgba(155, 215, 255, 0.45);
+        }
+
+        .hero-panel p {
+            margin: 0;
+            color: rgba(238, 246, 255, 0.72);
+            line-height: 1.65;
+            font-size: 0.92rem;
+        }
+
+        .section-title { font-family: 'Cinzel', serif; }
+
+        .product-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(155, 215, 255, 0.42);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+        }
+
+        .product-card img { background: rgba(255, 255, 255, 0.03); }
+        .neon-blue { box-shadow: 0 0 20px rgba(116, 191, 255, 0.28); }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 800;
+            transition: 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .filter-btn:hover {
+            background: rgba(116, 191, 255, 0.18);
+            border-color: rgba(155, 215, 255, 0.4);
+        }
+
+        #pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.25s ease;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .page-btn:hover:not(.disabled) {
+            background: rgba(116, 191, 255, 0.15);
+            border-color: rgba(155, 215, 255, 0.35);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, rgba(123, 203, 255, 0.9), rgba(78, 151, 223, 0.9));
+            color: #04111c;
+            border-color: transparent;
+            box-shadow: 0 0 18px rgba(123, 203, 255, 0.28);
+        }
+
+        .page-dots {
+            color: rgba(255, 255, 255, 0.3);
+            padding: 0 5px;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        footer a i { transition: 0.3s; }
+
+        footer a:hover i {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .content-shell { position: relative; }
+
+        @media (max-width: 1180px) {
+            .nav-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding-top: 14px;
+                padding-bottom: 14px;
+            }
+
+            nav { height: auto; }
+            #content { padding-top: 170px !important; }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                padding: 44px 26px 30px;
+            }
+
+            .hero-copy { max-width: 100%; }
+            .hero-visual { min-height: 560px; }
+            .kratos-frame { inset: 10% 8% 10%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { gap: 16px; }
+            .search-container { width: 100%; }
+            .hero-shell { min-height: auto; }
+
+            .hero-copy h1 {
+                font-size: clamp(2.8rem, 16vw, 4.6rem);
+            }
+
+            .hero-lead { font-size: 0.98rem; }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-btn { justify-content: center; }
+            .hero-stats { grid-template-columns: 1fr; }
+            .hero-visual { min-height: 470px; }
+
+            .hero-panel {
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+                padding: 18px;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <nav class="glass">
+    <nav class="glass nav-shell">
         <div class="nav-container">
             <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
                 <div class="w-12 h-12 flex items-center justify-center transition group-hover:scale-110 duration-300">
                     <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Crew Store Logo" class="w-full h-full object-contain">
                 </div>
-                <span class="text-xl font-black uppercase tracking-tighter brand-neon">CREW<span class="text-blue-500">STORE</span></span>
+                <span class="text-xl font-black uppercase tracking-tight brand-title">CREW<span class="text-sky-300">STORE</span></span>
             </div>
 
             <div class="nav-links">
-                <a href="#" onclick="showPage('home')"><i data-lucide="home" class="w-4 h-4"></i> HOME</a>
+                <a href="#" onclick="showPage('home')"><i data-lucide="home" class="w-4 h-4"></i> Home</a>
                 <div class="dropdown">
-                    <button><i data-lucide="gamepad-2" class="w-4 h-4"></i> GAMES <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button><i data-lucide="gamepad-2" class="w-4 h-4"></i> Games <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
                         <a href="#" onclick="loadConfig('ps_games')"><i data-lucide="play" class="w-3 h-3"></i> PlayStation Games</a>
                         <a href="#" onclick="loadConfig('xbox_games')"><i data-lucide="box" class="w-3 h-3"></i> Xbox Games</a>
@@ -159,7 +645,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="refresh-cw" class="w-4 h-4"></i> SUBSCRIPTIONS <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button><i data-lucide="refresh-cw" class="w-4 h-4"></i> Subs <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
                         <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="plus-circle" class="w-3 h-3"></i> PlayStation Plus</a>
                         <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="layers" class="w-3 h-3"></i> Xbox Game Pass</a>
@@ -167,7 +653,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="credit-card" class="w-4 h-4"></i> GIFT CARDS <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button><i data-lucide="credit-card" class="w-4 h-4"></i> Gift Cards <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
                         <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="ticket" class="w-3 h-3"></i> PSN Gift Cards</a>
                         <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="ticket" class="w-3 h-3"></i> Xbox Gift Cards</a>
@@ -178,78 +664,114 @@
 
             <div class="search-container">
                 <i data-lucide="search"></i>
-                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store...">
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search the realms...">
             </div>
         </div>
     </nav>
 
-    <div id="content">
-        <div id="home-view">
-            <section id="hero" class="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 parallax-bg">
-                    <img src="https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg"
-                         class="w-full h-full object-cover scale-110 brightness-50">
-                </div>
+    <div id="content" class="pt-32 content-shell">
+        <div id="home-view" class="max-w-7xl mx-auto px-4 md:px-6">
+            <section class="hero-shell mb-20">
+                <div class="rune-grid"></div>
+                <div class="particles" id="hero-particles"></div>
 
-                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/95"></div>
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <span class="eyebrow">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            Frostborn Collection
+                        </span>
 
-                <canvas id="embers"></canvas>
+                        <h1>
+                            Enter the
+                            <span class="frost">Nine Realms</span>
+                        </h1>
 
-                <div id="kratos" class="relative z-20 transition-transform duration-200">
-                    <img src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png"
-                         class="max-w-[750px] md:max-w-[900px] drop-shadow-[0_40px_120px_rgba(0,0,0,1)]">
-                    <div class="absolute inset-0 glow-pulse"></div>
-                </div>
+                        <p class="hero-lead">
+                            A God of War inspired storefront with icy atmosphere, premium drops, and a glass-forged interface built around your Kratos hero visual. Games, subscriptions, and gift cards feel like relics instead of plain products.
+                        </p>
 
-                <div class="glass-hero fade-in relative z-30 p-14 rounded-3xl text-center max-w-3xl -mt-24">
-                    <span class="text-blue-400 tracking-[0.6em] text-[10px] uppercase mb-4 block">
-                        Official Realm Store
-                    </span>
-                    <h1 class="text-7xl md:text-[110px] font-black italic mb-6 leading-[0.9]">
-                        CREW<span class="text-blue-500">STORE</span>
-                    </h1>
-                    <p class="text-gray-300 mb-10 max-w-xl mx-auto">
-                        Forge your ultimate gaming library with premium digital assets.
-                    </p>
-                    <button class="btn-glow px-14 py-5 rounded-xl" onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})">
-                        Browse Realms
-                    </button>
+                        <div class="hero-actions">
+                            <button onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})" class="hero-btn primary">
+                                <span>Browse Realms</span>
+                                <i data-lucide="axe" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="loadConfig('ps_games')" class="hero-btn secondary">
+                                <span>Explore Games</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <strong>24/7</strong>
+                                <span>Fast Delivery</span>
+                            </div>
+                            <div class="stat-card">
+                                <strong>9+</strong>
+                                <span>Realm Categories</span>
+                            </div>
+                            <div class="stat-card">
+                                <strong>Elite</strong>
+                                <span>Store Aesthetic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="kratos-aura"></div>
+                        <div class="kratos-frame"></div>
+                        <img src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png" alt="God of War Kratos">
+
+                        <div class="hero-panel">
+                            <div class="hero-panel-top">
+                                <strong>Featured Hero Drop</strong>
+                                <span>Winter Loadout</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <p>
+                                Frosty glass layers, floating particles, and cinematic contrast keep the homepage focused on Kratos while still pushing visitors toward the shop sections below.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
-            
-            <div class="max-w-7xl mx-auto px-6 mt-20">
-                <section class="mb-20">
-                    <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
-                        <i data-lucide="flame" class="w-6 h-6"></i> Random Games
-                    </h2>
-                    <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
-                </section>
 
-                <section class="mb-20">
-                    <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
-                        <i data-lucide="zap" class="w-6 h-6"></i> Random Subscriptions
-                    </h2>
-                    <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
-                </section>
+            <section class="mb-20">
+                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                    <i data-lucide="flame" class="w-6 h-6"></i> Random Games
+                </h2>
+                <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+            </section>
 
-                <section class="mb-20">
-                    <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
-                        <i data-lucide="gift" class="w-6 h-6"></i> Random Gift Cards
-                    </h2>
-                    <div id="random-cards-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10"></div>
-                </section>
-            </div>
+            <section class="mb-20">
+                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                    <i data-lucide="zap" class="w-6 h-6"></i> Random Subscriptions
+                </h2>
+                <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+            </section>
+
+            <section class="mb-20">
+                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                    <i data-lucide="gift" class="w-6 h-6"></i> Random Gift Cards
+                </h2>
+                <div id="random-cards-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10"></div>
+            </section>
         </div>
 
-        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden pt-32">
+        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-                <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 flex items-center gap-4"></h2>
+                <h2 id="category-title" class="section-title text-4xl font-black uppercase text-sky-200 flex items-center gap-4"></h2>
+
                 <div class="flex flex-wrap gap-4">
                     <button class="filter-btn" onclick="sortItems('name')"><i data-lucide="sort-asc" class="w-4 h-4"></i> A-Z</button>
                     <button class="filter-btn" onclick="sortItems('price-low')"><i data-lucide="trending-down" class="w-4 h-4"></i> Price: Low</button>
                     <button class="filter-btn" onclick="sortItems('price-high')"><i data-lucide="trending-up" class="w-4 h-4"></i> Price: High</button>
                 </div>
             </div>
+
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
             <div id="pagination" class="pb-32"></div>
         </div>
@@ -261,37 +783,40 @@
                 <div class="flex flex-col items-center md:items-start gap-4">
                     <div class="flex items-center gap-3">
                         <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Logo" class="w-10 h-10 object-contain">
-                        <span class="text-2xl font-black uppercase tracking-tighter">CREW<span class="text-blue-500">STORE</span></span>
+                        <span class="text-2xl font-black uppercase tracking-tight brand-title">CREW<span class="text-sky-300">STORE</span></span>
                     </div>
-                    <p class="text-gray-500 text-sm text-center md:text-left max-w-xs leading-relaxed">
+                    <p class="text-slate-300/70 text-sm text-center md:text-left max-w-xs leading-relaxed">
                         The ultimate destination for digital gaming assets, accounts, and subscriptions in Iraq.
                     </p>
                 </div>
+
                 <div class="flex flex-col items-center gap-5">
-                    <h4 class="font-black uppercase tracking-[0.2em] text-[10px] text-blue-500">Connect With Us</h4>
+                    <h4 class="font-black uppercase tracking-[0.2em] text-[10px] text-sky-200">Connect With Us</h4>
                     <div class="flex gap-3">
-                        <a href="https://www.facebook.com/CrewStore91" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-600 transition-all duration-300">
+                        <a href="https://www.facebook.com/CrewStore91" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-sky-500 transition-all duration-300">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                         </a>
-                        <a href="https://www.instagram.com/crewst0re" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-pink-600 transition-all duration-300">
+                        <a href="https://www.instagram.com/crewst0re" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-orange-500 transition-all duration-300">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
                         </a>
-                        <a href="https://wa.me/9647718168589" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-green-600 transition-all duration-300">
+                        <a href="https://wa.me/9647718168589" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-emerald-500 transition-all duration-300">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 8.38 8.38 0 0 1 3.8.9L21 3z"></path></svg>
                         </a>
                     </div>
                 </div>
+
                 <div class="flex flex-col items-center md:items-end gap-2">
-                    <h4 class="font-black uppercase tracking-[0.2em] text-[10px] text-blue-500">Customer Support</h4>
+                    <h4 class="font-black uppercase tracking-[0.2em] text-[10px] text-sky-200">Customer Support</h4>
                     <p class="text-white font-bold text-lg tracking-tight flex items-center gap-2">
-                        <i data-lucide="phone" class="w-4 h-4 text-blue-500 mr-1"></i>
-                        <span class="text-blue-500 text-sm">+964</span> 771 816 8589
+                        <i data-lucide="phone" class="w-4 h-4 text-sky-300 mr-1"></i>
+                        <span class="text-sky-300 text-sm">+964</span> 771 816 8589
                     </p>
                 </div>
             </div>
+
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-gray-600 text-[10px] uppercase tracking-[0.3em] font-bold">
-                    COPYRIGHT © 2026 — <span class="text-blue-500">CREW STORE</span>
+                <p class="text-slate-400 text-[10px] uppercase tracking-[0.3em] font-bold">
+                    Copyright (C) 2026 - <span class="text-sky-300">Crew Store</span>
                 </p>
                 <img src="https://www.image2url.com/r2/default/images/1776085578612-04ffa0e2-458f-461a-8052-a3450a9fb86f.png" alt="Payments" class="h-16 md:h-20 w-auto object-contain brightness-110">
             </div>
@@ -299,51 +824,6 @@
     </footer>
 
     <script>
-        // PARALLAX EFFECT
-        const hero = document.getElementById('hero');
-        const kratos = document.getElementById('kratos');
-        const bg = document.querySelector('.parallax-bg');
-
-        hero.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-
-            kratos.style.transform = `translate(${x}px, ${y}px)`;
-            bg.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px) scale(1.1)`;
-        });
-
-        // 🔥 EMBERS PARTICLES
-        const canvas = document.getElementById('embers');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particles = [];
-        for(let i=0;i<80;i++){
-            particles.push({
-                x: Math.random()*canvas.width,
-                y: Math.random()*canvas.height,
-                size: Math.random()*2,
-                speed: Math.random()*1+0.5
-            });
-        }
-        function animateParticles(){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach(p=>{
-                ctx.fillStyle = 'rgba(255,140,0,0.7)';
-                ctx.beginPath();
-                ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-                ctx.fill();
-                p.y -= p.speed;
-                if(p.y < 0){
-                    p.y = canvas.height;
-                    p.x = Math.random()*canvas.width;
-                }
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        // STORE LOGIC
         const STORE_CONFIG = {
             'ps_games':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'PlayStation Games' },
             'xbox_games': { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'Xbox Games' },
@@ -367,7 +847,9 @@
                 const response = await fetch(url);
                 const text = await response.text();
                 return parseCSV(text);
-            } catch (e) { return []; }
+            } catch (e) {
+                return [];
+            }
         }
 
         function parseCSV(csv) {
@@ -391,14 +873,14 @@
             const img = p.imageurl || p.ImageURL || "https://via.placeholder.com/400";
             return `
                 <div class="product-card p-4">
-                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-4 shadow-xl">
+                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-4 shadow-xl" alt="${name}">
                     <h3 class="font-bold text-lg leading-tight mb-1">${name}</h3>
-                    <p class="text-blue-500/60 text-xs font-bold uppercase tracking-widest mb-4">${cat}</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-black text-blue-500">${price}</span>
-                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" 
-                           target="_blank" class="bg-blue-600 p-3 rounded-2xl hover:bg-blue-500 transition neon-blue">
-                            <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
+                    <p class="text-sky-200/60 text-xs font-bold uppercase tracking-widest mb-4">${cat}</p>
+                    <div class="flex justify-between items-center gap-3">
+                        <span class="text-2xl font-black text-sky-300">${price}</span>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}"
+                           target="_blank" class="bg-sky-400 text-slate-950 p-3 rounded-2xl hover:bg-sky-300 transition neon-blue">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>`;
@@ -426,10 +908,10 @@
             btn.innerHTML = label;
             btn.className = `page-btn ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`;
             if (!disabled) {
-                btn.onclick = () => { 
-                    currentPage = page; 
-                    renderGrid(); 
-                    window.scrollTo({top: 0, behavior: 'smooth'}); 
+                btn.onclick = () => {
+                    currentPage = page;
+                    renderGrid();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 };
             }
             return btn;
@@ -439,9 +921,9 @@
             const pageCount = Math.ceil(currentData.length / itemsPerPage);
             const container = document.getElementById('pagination');
             container.innerHTML = '';
-            if(pageCount <= 1) return;
+            if (pageCount <= 1) return;
             container.appendChild(createPageBtn(currentPage - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', false, currentPage === 1));
-            const delta = 1; 
+            const delta = 1;
             const range = [];
             for (let i = 1; i <= pageCount; i++) {
                 if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) range.push(i);
@@ -452,7 +934,8 @@
                     if (i - l === 2) container.appendChild(createPageBtn(l + 1, l + 1));
                     else if (i - l !== 1) {
                         const dots = document.createElement('span');
-                        dots.innerText = '...'; dots.className = 'page-dots';
+                        dots.innerText = '...';
+                        dots.className = 'page-dots';
                         container.appendChild(dots);
                     }
                 }
@@ -469,9 +952,9 @@
         }
 
         function sortItems(type) {
-            if(type === 'name') currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-            else if(type === 'price-low') currentData.sort((a, b) => cleanPrice(a.price) - cleanPrice(b.price));
-            else if(type === 'price-high') currentData.sort((a, b) => cleanPrice(b.price) - cleanPrice(a.price));
+            if (type === 'name') currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            else if (type === 'price-low') currentData.sort((a, b) => cleanPrice(a.price) - cleanPrice(b.price));
+            else if (type === 'price-high') currentData.sort((a, b) => cleanPrice(b.price) - cleanPrice(a.price));
             currentPage = 1;
             renderGrid();
         }
@@ -488,7 +971,7 @@
 
         function searchProducts() {
             const query = document.getElementById('mainSearch').value.toLowerCase();
-            if(query.length < 2) return;
+            if (query.length < 2) return;
             showPage('product');
             document.getElementById('category-title').innerText = "Search Results";
             fetchCSV(STORE_CONFIG['ps_games'].id, 'Games').then(data => {
@@ -500,18 +983,36 @@
         function showPage(page) {
             const home = document.getElementById('home-view');
             const prod = document.getElementById('product-view');
-            if(page === 'home') {
-                home.classList.remove('hidden'); prod.classList.add('hidden');
+            if (page === 'home') {
+                home.classList.remove('hidden');
+                prod.classList.add('hidden');
                 loadHome();
             } else {
-                home.classList.add('hidden'); prod.classList.remove('hidden');
+                home.classList.add('hidden');
+                prod.classList.remove('hidden');
             }
             setTimeout(() => lucide.createIcons(), 100);
         }
 
-        window.onload = () => { 
-            loadHome(); 
-            lucide.createIcons(); 
+        function renderParticles() {
+            const container = document.getElementById('hero-particles');
+            if (!container) return;
+            const particles = Array.from({ length: 30 }, () => {
+                const size = `${Math.random() * 5 + 2}px`;
+                const left = `${Math.random() * 100}%`;
+                const top = `${Math.random() * 100}%`;
+                const opacity = (Math.random() * 0.5 + 0.2).toFixed(2);
+                const duration = `${Math.random() * 10 + 8}s`;
+                const delay = `${Math.random() * -18}s`;
+                return `<span class="particle" style="--size:${size}; --left:${left}; --top:${top}; --opacity:${opacity}; --duration:${duration}; --delay:${delay};"></span>`;
+            });
+            container.innerHTML = particles.join('');
+        }
+
+        window.onload = () => {
+            renderParticles();
+            loadHome();
+            lucide.createIcons();
         };
     </script>
 </body>
