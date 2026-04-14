@@ -30,10 +30,10 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background:
-                radial-gradient(circle at 20% 20%, rgba(116, 191, 255, 0.12), transparent 28%),
-                radial-gradient(circle at 80% 15%, rgba(211, 82, 59, 0.12), transparent 22%),
-                linear-gradient(rgba(3, 7, 12, 0.7), rgba(3, 7, 12, 0.92)),
-                url('https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg') center/cover fixed;
+                radial-gradient(circle at 18% 18%, rgba(116, 191, 255, 0.1), transparent 24%),
+                radial-gradient(circle at 82% 12%, rgba(211, 82, 59, 0.1), transparent 20%),
+                linear-gradient(180deg, rgba(4, 9, 15, 0.96), rgba(7, 13, 20, 0.98)),
+                url('https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg') center 22%/145% auto fixed;
             color: var(--text);
             min-height: 100vh;
             margin: 0;
@@ -45,8 +45,24 @@
             position: fixed;
             inset: 0;
             background:
-                linear-gradient(115deg, rgba(124, 203, 255, 0.06), transparent 40%),
-                linear-gradient(290deg, rgba(255, 255, 255, 0.05), transparent 38%);
+                linear-gradient(115deg, rgba(124, 203, 255, 0.04), transparent 42%),
+                linear-gradient(290deg, rgba(255, 255, 255, 0.03), transparent 38%),
+                radial-gradient(circle at 50% 130%, rgba(116, 191, 255, 0.14), transparent 34%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0, transparent 20%),
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: auto, 72px 72px, 72px 72px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+            opacity: 0.32;
             pointer-events: none;
             z-index: -1;
         }
@@ -185,8 +201,11 @@
 
         .hero-shell {
             position: relative;
-            min-height: calc(100vh - 120px);
-            border-radius: 30px;
+            min-height: 100vh;
+            width: calc(100vw - 28px);
+            margin-left: calc(50% - 50vw + 14px);
+            margin-right: calc(50% - 50vw + 14px);
+            border-radius: 34px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
@@ -253,6 +272,11 @@
             animation-delay: var(--delay);
         }
 
+        .particle.soft {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.72), rgba(116, 191, 255, 0.08) 60%, transparent 74%);
+            filter: blur(2px);
+        }
+
         @keyframes drift {
             0% { transform: translate3d(0, 0, 0) scale(0.9); }
             50% { transform: translate3d(18px, -28px, 0) scale(1); }
@@ -262,12 +286,12 @@
         .hero-grid {
             position: relative;
             z-index: 2;
-            min-height: calc(100vh - 120px);
+            min-height: 100vh;
             display: grid;
             grid-template-columns: 1.05fr 0.95fr;
             align-items: center;
             gap: 28px;
-            padding: 72px 56px 42px;
+            padding: 110px 56px 42px;
         }
 
         .hero-copy { max-width: 640px; }
@@ -402,14 +426,26 @@
             box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.03);
         }
 
-        .hero-visual img {
+        .kratos-crop {
             position: relative;
             z-index: 2;
             width: min(100%, 760px);
+            height: 720px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            mask-image: linear-gradient(180deg, black 0 82%, transparent 100%);
+        }
+
+        .hero-visual img {
+            position: relative;
+            width: 100%;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.72));
             animation: heroFloat 6.5s ease-in-out infinite;
+            transform: translateY(74px) scale(1.08);
         }
 
         @keyframes heroFloat {
@@ -475,6 +511,43 @@
             color: rgba(238, 246, 255, 0.72);
             line-height: 1.65;
             font-size: 0.92rem;
+        }
+
+        .count-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            padding: 6px 11px;
+            border-radius: 999px;
+            background: rgba(155, 215, 255, 0.1);
+            border: 1px solid rgba(155, 215, 255, 0.22);
+            color: var(--ice-strong);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .category-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(238, 246, 255, 0.72);
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
         }
 
         .section-title { font-family: 'Cinzel', serif; }
@@ -593,12 +666,19 @@
             .hero-copy { max-width: 100%; }
             .hero-visual { min-height: 560px; }
             .kratos-frame { inset: 10% 8% 10%; }
+            .kratos-crop { height: 560px; }
         }
 
         @media (max-width: 768px) {
             .nav-links { gap: 16px; }
             .search-container { width: 100%; }
-            .hero-shell { min-height: auto; }
+            .hero-shell {
+                min-height: 100svh;
+                width: calc(100vw - 16px);
+                margin-left: calc(50% - 50vw + 8px);
+                margin-right: calc(50% - 50vw + 8px);
+                border-radius: 24px;
+            }
 
             .hero-copy h1 {
                 font-size: clamp(2.8rem, 16vw, 4.6rem);
@@ -614,6 +694,10 @@
             .hero-btn { justify-content: center; }
             .hero-stats { grid-template-columns: 1fr; }
             .hero-visual { min-height: 470px; }
+            .kratos-crop {
+                height: 470px;
+                width: min(100%, 520px);
+            }
 
             .hero-panel {
                 left: 14px;
@@ -645,19 +729,19 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="refresh-cw" class="w-4 h-4"></i> Subs <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button><i data-lucide="layers-3" class="w-4 h-4"></i> Subscriptions <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="plus-circle" class="w-3 h-3"></i> PlayStation Plus</a>
-                        <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="layers" class="w-3 h-3"></i> Xbox Game Pass</a>
-                        <a href="#" onclick="loadConfig('pc_subs')"><i data-lucide="cpu" class="w-3 h-3"></i> PC Subscriptions</a>
+                        <a href="#" onclick="loadConfig('ps_subs')"><i data-lucide="shield-plus" class="w-3 h-3"></i> PlayStation Plus</a>
+                        <a href="#" onclick="loadConfig('xbox_subs')"><i data-lucide="badge-plus" class="w-3 h-3"></i> Xbox Game Pass</a>
+                        <a href="#" onclick="loadConfig('pc_subs')"><i data-lucide="orbit" class="w-3 h-3"></i> PC Subscriptions</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button><i data-lucide="credit-card" class="w-4 h-4"></i> Gift Cards <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <button><i data-lucide="ticket-percent" class="w-4 h-4"></i> Gift Cards <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
                     <div class="dropdown-menu">
-                        <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="ticket" class="w-3 h-3"></i> PSN Gift Cards</a>
-                        <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="ticket" class="w-3 h-3"></i> Xbox Gift Cards</a>
-                        <a href="#" onclick="loadConfig('pc_cards')"><i data-lucide="ticket" class="w-3 h-3"></i> Steam Gift Cards</a>
+                        <a href="#" onclick="loadConfig('ps_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> PSN Gift Cards</a>
+                        <a href="#" onclick="loadConfig('xbox_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Xbox Gift Cards</a>
+                        <a href="#" onclick="loadConfig('pc_cards')"><i data-lucide="wallet-cards" class="w-3 h-3"></i> Steam Gift Cards</a>
                     </div>
                 </div>
             </div>
@@ -721,7 +805,9 @@
                     <div class="hero-visual">
                         <div class="kratos-aura"></div>
                         <div class="kratos-frame"></div>
-                        <img src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png" alt="God of War Kratos">
+                        <div class="kratos-crop">
+                            <img src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png" alt="God of War Kratos">
+                        </div>
 
                         <div class="hero-panel">
                             <div class="hero-panel-top">
@@ -740,30 +826,42 @@
             </section>
 
             <section class="mb-20">
-                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
-                    <i data-lucide="flame" class="w-6 h-6"></i> Random Games
-                </h2>
+                <div class="section-head mb-8">
+                    <h2 class="section-title text-2xl font-black uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                        <i data-lucide="swords" class="w-6 h-6"></i> Random Games
+                    </h2>
+                    <span id="games-count" class="count-chip">0</span>
+                </div>
                 <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
             </section>
 
             <section class="mb-20">
-                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
-                    <i data-lucide="zap" class="w-6 h-6"></i> Random Subscriptions
-                </h2>
+                <div class="section-head mb-8">
+                    <h2 class="section-title text-2xl font-black uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                        <i data-lucide="layers-3" class="w-6 h-6"></i> Random Subscriptions
+                    </h2>
+                    <span id="subs-count" class="count-chip">0</span>
+                </div>
                 <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
             </section>
 
             <section class="mb-20">
-                <h2 class="section-title text-2xl font-black mb-8 uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
-                    <i data-lucide="gift" class="w-6 h-6"></i> Random Gift Cards
-                </h2>
+                <div class="section-head mb-8">
+                    <h2 class="section-title text-2xl font-black uppercase border-l-4 border-sky-300 pl-4 text-sky-200 flex items-center gap-3">
+                        <i data-lucide="ticket-percent" class="w-6 h-6"></i> Random Gift Cards
+                    </h2>
+                    <span id="cards-count" class="count-chip">0</span>
+                </div>
                 <div id="random-cards-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10"></div>
             </section>
         </div>
 
         <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-                <h2 id="category-title" class="section-title text-4xl font-black uppercase text-sky-200 flex items-center gap-4"></h2>
+                <div class="flex items-center flex-wrap gap-4">
+                    <h2 id="category-title" class="section-title text-4xl font-black uppercase text-sky-200 flex items-center gap-4"></h2>
+                    <span id="category-count" class="category-meta">0 items</span>
+                </div>
 
                 <div class="flex flex-wrap gap-4">
                     <button class="filter-btn" onclick="sortItems('name')"><i data-lucide="sort-asc" class="w-4 h-4"></i> A-Z</button>
@@ -886,11 +984,21 @@
                 </div>`;
         }
 
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        }
+
+        function updateProductCount(count) {
+            setText('category-count', `${count} ${count === 1 ? 'item' : 'items'}`);
+        }
+
         async function loadConfig(key) {
             showPage('product');
             document.getElementById('category-title').innerText = STORE_CONFIG[key].title;
             currentData = await fetchCSV(STORE_CONFIG[key].id, STORE_CONFIG[key].tab);
             currentPage = 1;
+            updateProductCount(currentData.length);
             renderGrid();
         }
 
@@ -960,9 +1068,18 @@
         }
 
         async function loadHome() {
-            const games = (await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games')).sort(() => 0.5 - Math.random()).slice(0, 4);
-            const subs = (await fetchCSV(STORE_CONFIG['ps_subs'].id, 'Subscriptions')).sort(() => 0.5 - Math.random()).slice(0, 4);
-            const cards = (await fetchCSV(STORE_CONFIG['ps_cards'].id, 'GiftCards')).sort(() => 0.5 - Math.random()).slice(0, 4);
+            const gamesData = await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games');
+            const subsData = await fetchCSV(STORE_CONFIG['ps_subs'].id, 'Subscriptions');
+            const cardsData = await fetchCSV(STORE_CONFIG['ps_cards'].id, 'GiftCards');
+
+            const games = [...gamesData].sort(() => 0.5 - Math.random()).slice(0, 4);
+            const subs = [...subsData].sort(() => 0.5 - Math.random()).slice(0, 4);
+            const cards = [...cardsData].sort(() => 0.5 - Math.random()).slice(0, 4);
+
+            setText('games-count', `${gamesData.length} items`);
+            setText('subs-count', `${subsData.length} items`);
+            setText('cards-count', `${cardsData.length} items`);
+
             document.getElementById('random-games-grid').innerHTML = games.map(p => createCard(p)).join('');
             document.getElementById('random-subs-grid').innerHTML = subs.map(p => createCard(p)).join('');
             document.getElementById('random-cards-grid').innerHTML = cards.map(p => createCard(p)).join('');
@@ -976,6 +1093,7 @@
             document.getElementById('category-title').innerText = "Search Results";
             fetchCSV(STORE_CONFIG['ps_games'].id, 'Games').then(data => {
                 currentData = data.filter(p => (p.name || "").toLowerCase().includes(query));
+                updateProductCount(currentData.length);
                 renderGrid();
             });
         }
@@ -997,14 +1115,15 @@
         function renderParticles() {
             const container = document.getElementById('hero-particles');
             if (!container) return;
-            const particles = Array.from({ length: 30 }, () => {
+            const particles = Array.from({ length: 48 }, (_, index) => {
                 const size = `${Math.random() * 5 + 2}px`;
                 const left = `${Math.random() * 100}%`;
                 const top = `${Math.random() * 100}%`;
                 const opacity = (Math.random() * 0.5 + 0.2).toFixed(2);
                 const duration = `${Math.random() * 10 + 8}s`;
                 const delay = `${Math.random() * -18}s`;
-                return `<span class="particle" style="--size:${size}; --left:${left}; --top:${top}; --opacity:${opacity}; --duration:${duration}; --delay:${delay};"></span>`;
+                const kind = index % 3 === 0 ? 'particle soft' : 'particle';
+                return `<span class="${kind}" style="--size:${size}; --left:${left}; --top:${top}; --opacity:${opacity}; --duration:${duration}; --delay:${delay};"></span>`;
             });
             container.innerHTML = particles.join('');
         }
