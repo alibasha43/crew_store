@@ -130,19 +130,42 @@
 
     <div id="content" class="pt-32">
         <div id="home-view" class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col items-center justify-center text-center">
-    <div class="relative group">
-        <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" 
-             alt="Crew Store Premium Assets" 
-             class="w-full max-w-[400px] md:max-w-[600px] h-auto object-contain 
-                    brightness-110 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.4)]
-                    transition-transform duration-500 group-hover:scale-105">
-    </div>
+            
+            <section class="relative min-h-[60vh] flex items-center mb-20 overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+                    
+                    <div class="flex flex-col items-center lg:items-start text-center lg:text-left z-10">
+                        <span class="bg-blue-600/20 text-blue-500 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6 border border-blue-500/30">
+                            Premium Digital Assets
+                        </span>
+                        
+                        <h1 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter mb-4 italic leading-none">
+                            CREW<span class="text-blue-600">STORE</span>
+                        </h1>
+                        
+                        <p class="text-gray-400 text-sm md:text-base font-bold uppercase tracking-[0.2em] mb-10 max-w-md">
+                            Equip your journey with the best gaming accounts & subscriptions in Iraq.
+                        </p>
 
-    <p class="mt-6 text-gray-400 uppercase tracking-[0.5em] text-xs font-bold">
-        Premium Digital Assets
-    </p>
-</div>
+                        <button onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})" 
+                                class="group relative px-8 py-4 bg-blue-600 text-white font-black uppercase tracking-tighter rounded-sm skew-x-[-12deg] hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                            <span class="inline-block skew-x-[12deg]">Explore Shop</span>
+                        </button>
+                    </div>
+
+                    <div class="relative flex justify-center items-center">
+                        <div class="absolute w-[250px] h-[250px] md:w-[450px] md:h-[450px] bg-blue-600/10 rounded-full blur-[100px]"></div>
+                        
+                        <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" 
+                             alt="Kratos God of War" 
+                             class="relative w-full max-w-[450px] md:max-w-[550px] h-auto object-contain z-20 
+                                    filter brightness-110 drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]
+                                    transition-transform duration-700 hover:scale-105">
+                        
+                        <div class="absolute w-[200px] h-[200px] md:w-[400px] md:h-[400px] border-[10px] border-blue-600/5 rounded-full"></div>
+                    </div>
+                </div>
+            </section>
             
             <section class="mb-20">
                 <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
