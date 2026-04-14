@@ -287,20 +287,20 @@
             z-index: 2;
             min-height: 100vh;
             display: grid;
-            grid-template-columns: minmax(320px, 500px) minmax(520px, 680px);
-            max-width: 1280px;
+            grid-template-columns: minmax(320px, 460px) minmax(480px, 620px);
+            max-width: 1180px;
             margin: 0 auto;
             justify-content: space-between;
             align-items: center;
-            gap: 24px;
-            padding: 110px 54px 58px;
+            gap: 56px;
+            padding: 112px 56px 80px;
         }
 
         .hero-copy {
             position: relative;
             z-index: 4;
-            max-width: 500px;
-            padding-bottom: 36px;
+            max-width: 460px;
+            padding-bottom: 0;
         }
 
         .eyebrow {
@@ -321,8 +321,8 @@
 
         .hero-copy h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(3.5rem, 9vw, 7rem);
-            line-height: 0.9;
+            font-size: clamp(3.8rem, 8vw, 6.6rem);
+            line-height: 0.86;
             margin: 0 0 18px;
             text-transform: uppercase;
             letter-spacing: -0.03em;
@@ -333,17 +333,17 @@
 
         .hero-lead {
             color: var(--muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            max-width: 500px;
-            margin-bottom: 28px;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            max-width: 420px;
+            margin-bottom: 30px;
         }
 
         .hero-actions {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
-            margin-bottom: 26px;
+            margin-bottom: 0;
         }
 
         .hero-btn {
@@ -374,12 +374,7 @@
             backdrop-filter: blur(16px);
         }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 14px;
-            max-width: 500px;
-        }
+        .hero-stats { display: none; }
 
         .stat-card {
             padding: 18px;
@@ -410,8 +405,8 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            min-height: 720px;
-            padding-top: 20px;
+            min-height: 760px;
+            padding-top: 12px;
             z-index: 2;
         }
 
@@ -427,7 +422,7 @@
 
         .kratos-frame {
             position: absolute;
-            inset: 9% 2% 14% 24%;
+            inset: 10% 8% 16% 20%;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.09);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
@@ -438,8 +433,8 @@
         .kratos-crop {
             position: relative;
             z-index: 2;
-            width: min(100%, 640px);
-            height: 700px;
+            width: min(100%, 560px);
+            height: 760px;
             overflow: hidden;
             display: flex;
             justify-content: flex-end;
@@ -450,11 +445,11 @@
 
         .hero-visual img {
             position: relative;
-            width: 108%;
+            width: 98%;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.72));
-            transform: translateX(14%) translateY(34px) scale(1.03);
+            transform: translateX(8%) translateY(8px) scale(1);
             transform-origin: bottom center;
         }
 
@@ -463,19 +458,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        .hero-panel {
-            position: absolute;
-            left: 22%;
-            right: 4%;
-            bottom: 3%;
-            z-index: 3;
-            padding: 18px 22px;
-            border-radius: 20px;
-            background: linear-gradient(180deg, rgba(12, 20, 29, 0.7), rgba(12, 20, 29, 0.56));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(22px);
-            box-shadow: 0 24px 44px rgba(0, 0, 0, 0.34);
-        }
+        .hero-panel { display: none; }
 
         .hero-panel-top {
             display: flex;
@@ -717,20 +700,14 @@
             }
             .kratos-frame { inset: 10% 8% 10%; }
             .kratos-crop {
-                width: min(100%, 520px);
+                width: min(100%, 460px);
                 height: 560px;
                 justify-content: center;
             }
 
             .hero-visual img {
-                width: 104%;
-                transform: translateX(4%) translateY(26px) scale(1.02);
-            }
-
-            .hero-panel {
-                left: 12%;
-                right: 12%;
-                bottom: 4%;
+                width: 96%;
+                transform: translateX(2%) translateY(10px) scale(1);
             }
         }
 
@@ -781,31 +758,19 @@
             .hero-btn { justify-content: center; }
             .hero-stats { grid-template-columns: 1fr; }
             .hero-visual {
-                min-height: 390px;
+                min-height: 360px;
                 padding-right: 0;
                 padding-top: 10px;
             }
             .kratos-crop {
-                height: 360px;
-                width: min(100%, 320px);
+                height: 340px;
+                width: min(100%, 280px);
                 justify-content: center;
             }
 
             .hero-visual img {
-                width: 100%;
-                transform: translateX(0) translateY(14px) scale(1);
-            }
-
-            .hero-panel {
-                left: 14px;
-                right: 14px;
-                bottom: 8px;
-                padding: 16px;
-            }
-
-            .hero-panel p {
-                font-size: 0.84rem;
-                line-height: 1.55;
+                width: 96%;
+                transform: translateX(0) translateY(8px) scale(1);
             }
 
             .dropdown {
