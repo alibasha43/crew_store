@@ -1,197 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crew Store | God Mode</title>
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crew Store | Official</title>
+    <link rel="icon" type="image/png" href="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-<style>
-body {
-    margin:0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    overflow-x:hidden;
-    background:black;
-}
+        /* NEW CSS ADDITIONS */
+        .fade-in {
+            animation: fadeIn 1.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from {opacity:0; transform:translateY(30px);}
+            to {opacity:1; transform:translateY(0);}
+        }
 
-/* BACKGROUND */
-.bg-layer {
-    position: fixed;
-    inset:0;
-    z-index:-3;
-}
-.bg-layer img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    filter: blur(4px) brightness(0.4);
-    transform: scale(1.1);
-}
+        .glow-pulse {
+            background: radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%);
+            filter: blur(120px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% {opacity:0.4;}
+            50% {opacity:0.8;}
+        }
 
-/* FOG */
-.fog {
-    position: fixed;
-    inset:0;
-    background: radial-gradient(circle at 50% 50%, transparent, black 80%);
-    z-index:-2;
-}
+        .btn-glow {
+            background: linear-gradient(135deg,#2563eb,#3b82f6);
+            box-shadow: 0 0 40px rgba(59,130,246,0.4);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease;
+        }
+        .btn-glow:hover { transform: scale(1.05); }
+        .btn-glow::after {
+            content:'';
+            position:absolute;
+            width:200%;
+            height:200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+            top:-50%;
+            left:-50%;
+            animation: energy 4s linear infinite;
+        }
+        @keyframes energy {
+            from {transform: rotate(0);}
+            to {transform: rotate(360deg);}
+        }
 
-/* PARTICLES */
-canvas {
-    position: fixed;
-    inset:0;
-    z-index:-1;
-}
+        #embers {
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+            pointer-events:none;
+        }
 
-/* HERO */
-.hero {
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-}
+        .parallax-bg {
+            transition: transform 0.2s ease-out;
+        }
 
-.kratos {
-    width:900px;
-    max-width:95%;
-    filter: drop-shadow(0 50px 120px rgba(0,0,0,1));
-    transition:0.6s;
-}
+        .glass-hero {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.hero:hover .kratos {
-    transform: scale(1.05) translateY(-10px);
-}
+        /* EXISTING NAV & CARD STYLES */
+        nav { height: 80px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .glass { background: rgba(15, 15, 15, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a, .nav-links button { 
+            text-decoration: none; color: white; font-weight: 800; font-size: 12px; letter-spacing: 1px; 
+            background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.3); transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links button:hover { color: #3b82f6; text-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
+        
+        .brand-neon { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
 
-/* GLOW */
-.glow {
-    position:absolute;
-    width:600px;
-    height:600px;
-    background: radial-gradient(circle, rgba(59,130,246,0.4), transparent);
-    filter: blur(120px);
-    z-index:-1;
-}
+        .dropdown { position: relative; padding: 30px 0; }
+        .dropdown-menu { 
+            display: none; position: absolute; top: 80px; left: 0; 
+            background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); 
+            min-width: 220px; border-radius: 12px; padding: 10px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-transform: uppercase; transition: 0.2s; font-size: 11px; text-shadow: none; }
+        .dropdown-menu a:hover { background: #2563eb; color: white; text-shadow: none; }
 
-/* GLASS */
-.glass {
-    margin-top:-120px;
-    padding:60px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(40px);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:30px;
-    text-align:center;
-    max-width:800px;
-}
+        .search-container { position: relative; width: 220px; display: flex; align-items: center; }
+        .search-container input { 
+            width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 50px; padding: 8px 15px 8px 40px; color: white; outline: none; font-size: 13px;
+        }
+        .search-container i { 
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+            color: #3b82f6; width: 16px; height: 16px; pointer-events: none; 
+        }
 
-/* TEXT */
-h1 {
-    font-size:100px;
-    font-weight:900;
-    color:white;
-}
-
-/* BUTTON */
-.btn {
-    margin-top:30px;
-    padding:18px 50px;
-    background:linear-gradient(135deg,#2563eb,#3b82f6);
-    border-radius:12px;
-    font-weight:800;
-    letter-spacing:2px;
-    color:white;
-    box-shadow:0 0 40px rgba(59,130,246,0.6);
-    transition:0.3s;
-}
-
-.btn:hover{
-    transform: translateY(-5px) scale(1.05);
-    box-shadow:0 0 80px rgba(59,130,246,1);
-}
-
-</style>
+        .product-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .product-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(255,255,255,0.06); }
+        
+        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        
+        #pagination { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 2rem; }
+        .page-btn { min-width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; font-weight: 600; }
+        .page-btn:hover:not(.disabled) { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
+        .page-btn.active { background: #2563eb; border-color: #2563eb; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+        .page-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+    </style>
 </head>
 <body>
 
-<!-- BACKGROUND -->
-<div class="bg-layer">
-<img src="https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg">
-</div>
+    <nav class="glass">
+        <div class="nav-container">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
+                <div class="w-12 h-12 flex items-center justify-center transition group-hover:scale-110 duration-300">
+                    <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Crew Store Logo" class="w-full h-full object-contain">
+                </div>
+                <span class="text-xl font-black uppercase tracking-tighter brand-neon">CREW<span class="text-blue-500">STORE</span></span>
+            </div>
 
-<div class="fog"></div>
-<canvas id="particles"></canvas>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('home')"><i data-lucide="home" class="w-4 h-4"></i> HOME</a>
+                <div class="dropdown">
+                    <button><i data-lucide="gamepad-2" class="w-4 h-4"></i> GAMES <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="loadConfig('ps_games')">PlayStation Games</a>
+                        <a href="#" onclick="loadConfig('xbox_games')">Xbox Games</a>
+                        <a href="#" onclick="loadConfig('pc_games')">PC Games</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button><i data-lucide="refresh-cw" class="w-4 h-4"></i> SUBSCRIPTIONS <i data-lucide="chevron-down" class="w-3 h-3"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="loadConfig('ps_subs')">PlayStation Plus</a>
+                        <a href="#" onclick="loadConfig('xbox_subs')">Xbox Game Pass</a>
+                    </div>
+                </div>
+            </div>
 
-<!-- HERO -->
-<section class="hero">
+            <div class="search-container">
+                <i data-lucide="search"></i>
+                <input type="text" id="mainSearch" onkeyup="searchProducts()" placeholder="Search store...">
+            </div>
+        </div>
+    </nav>
 
-<div class="glow"></div>
+    <div id="content">
+        <div id="home-view">
+            <section id="hero" class="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden">
 
-<img class="kratos" src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png">
+                <div class="absolute inset-0 parallax-bg">
+                    <img src="https://www.image2url.com/r2/default/images/1776157434300-bdce2c6e-256c-4b2a-a577-ee45d7a751af.jpg"
+                         class="w-full h-full object-cover scale-110 brightness-50">
+                </div>
 
-<div class="glass">
-<h1>CREWSTORE</h1>
-<p style="color:#aaa;margin-top:10px;">Enter the realm of gods. Power. Chaos. Control.</p>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/95"></div>
 
-<button class="btn">ENTER STORE</button>
-</div>
+                <canvas id="embers"></canvas>
 
-</section>
+                <div id="kratos" class="relative z-20 transition-transform duration-200">
+                    <img src="https://www.image2url.com/r2/default/images/1776155563318-bd6675a4-7b08-4853-9fdf-aed6e7d56d20.png"
+                         class="max-w-[750px] md:max-w-[900px] drop-shadow-[0_40px_120px_rgba(0,0,0,1)]">
 
-<script>
-// PARTICLES ENGINE
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
+                    <div class="absolute inset-0 glow-pulse"></div>
+                </div>
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+                <div class="glass-hero fade-in relative z-30 p-14 rounded-3xl text-center max-w-3xl -mt-24">
+                    <span class="text-blue-400 tracking-[0.6em] text-[10px] uppercase mb-4 block">
+                        Official Realm Store
+                    </span>
+                    <h1 class="text-7xl md:text-[110px] font-black italic mb-6 leading-[0.9]">
+                        CREW<span class="text-blue-500">STORE</span>
+                    </h1>
+                    <p class="text-gray-300 mb-10 max-w-xl mx-auto">
+                        Forge your ultimate gaming library with premium digital assets.
+                    </p>
+                    <button class="btn-glow px-14 py-5 rounded-xl" onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})">
+                        Browse Realms
+                    </button>
+                </div>
+            </section>
 
-let particles = [];
+            <div class="max-w-7xl mx-auto px-6 mt-20">
+                <section class="mb-20">
+                    <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
+                        <i data-lucide="flame" class="w-6 h-6"></i> Featured Games
+                    </h2>
+                    <div id="random-games-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+                </section>
 
-for(let i=0;i<120;i++){
-    particles.push({
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-        r:Math.random()*2,
-        d:Math.random()*1
-    });
-}
+                <section class="mb-20">
+                    <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
+                        <i data-lucide="zap" class="w-6 h-6"></i> Subscriptions
+                    </h2>
+                    <div id="random-subs-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
+                </section>
+            </div>
+        </div>
 
-function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle='rgba(255,255,255,0.3)';
-    ctx.beginPath();
+        <div id="product-view" class="max-w-7xl mx-auto px-6 pt-32 hidden">
+            <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 mb-12"></h2>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
+            <div id="pagination" class="pb-32"></div>
+        </div>
+    </div>
 
-    for(let i=0;i<particles.length;i++){
-        let p = particles[i];
-        ctx.moveTo(p.x,p.y);
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2,true);
-    }
+    <footer class="glass border-t border-white/10 py-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+             <p class="text-gray-600 text-[10px] uppercase tracking-[0.3em] font-bold">
+                COPYRIGHT © 2026 — <span class="text-blue-500">CREW STORE</span>
+            </p>
+        </div>
+    </footer>
 
-    ctx.fill();
-    update();
-}
+    <script>
+        // PARALLAX EFFECT
+        const hero = document.getElementById('hero');
+        const kratos = document.getElementById('kratos');
+        const bg = document.querySelector('.parallax-bg');
 
-function update(){
-    for(let i=0;i<particles.length;i++){
-        let p = particles[i];
-        p.y -= p.d;
-        if(p.y < 0){
-            p.y = canvas.height;
+        hero.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            if(kratos) kratos.style.transform = `translate(${x}px, ${y}px)`;
+            if(bg) bg.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px) scale(1.1)`;
+        });
+
+        // 🔥 EMBERS PARTICLES
+        const canvas = document.getElementById('embers');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0;i<80;i++){
+                particles.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height,
+                    size: Math.random()*2,
+                    speed: Math.random()*1+0.5
+                });
+            }
         }
-    }
-}
 
-setInterval(draw,30);
+        function animateParticles(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach(p=>{
+                ctx.fillStyle = 'rgba(255,140,0,0.7)';
+                ctx.beginPath();
+                ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+                ctx.fill();
+                p.y -= p.speed;
+                if(p.y < 0){
+                    p.y = canvas.height;
+                    p.x = Math.random()*canvas.width;
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
 
-// PARALLAX
-window.addEventListener('mousemove', e => {
-    let x = (e.clientX / window.innerWidth - 0.5) * 20;
-    let y = (e.clientY / window.innerHeight - 0.5) * 20;
-    document.querySelector('.kratos').style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
-});
-</script>
+        window.addEventListener('resize', initParticles);
+        initParticles();
+        animateParticles();
 
+        // STORE LOGIC
+        const STORE_CONFIG = {
+            'ps_games':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'PlayStation Games' },
+            'xbox_games': { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'Xbox Games' },
+            'pc_games':   { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Games', title: 'PC Games' },
+            'ps_subs':    { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Subscriptions', title: 'PS Plus' },
+            'xbox_subs':  { id: '1AGvTOYX5qXX3ezaku0rwTbQ0TkxBvCEH7QZHCfjNuU8', tab: 'Subscriptions', title: 'Game Pass' }
+        };
+
+        const WHATSAPP_NUMBER = '9647718168589';
+        let currentData = [];
+        let currentPage = 1;
+        const itemsPerPage = 12;
+
+        async function fetchCSV(sheetId, tabName) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                return parseCSV(text);
+            } catch (e) { return []; }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            if (lines.length < 2) return [];
+            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
+            return lines.slice(1).map(line => {
+                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                const row = {};
+                headers.forEach((h, i) => {
+                    row[h] = values[i] ? values[i].replace(/"/g, '').trim() : "";
+                });
+                return row;
+            });
+        }
+
+        function createCard(p) {
+            const name = p.name || "Item";
+            const price = p.price || "Contact";
+            const img = p.imageurl || "https://via.placeholder.com/400";
+            return `
+                <div class="product-card p-4">
+                    <img src="${img}" class="w-full h-64 object-cover rounded-2xl mb-4">
+                    <h3 class="font-bold text-lg mb-4">${name}</h3>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-black text-blue-500">${price}</span>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I%20want%20to%20buy%20${encodeURIComponent(name)}" 
+                           target="_blank" class="bg-blue-600 p-3 rounded-2xl neon-blue">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
+                        </a>
+                    </div>
+                </div>`;
+        }
+
+        async function loadConfig(key) {
+            showPage('product');
+            document.getElementById('category-title').innerText = STORE_CONFIG[key].title;
+            currentData = await fetchCSV(STORE_CONFIG[key].id, STORE_CONFIG[key].tab);
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginatedItems = currentData.slice(start, start + itemsPerPage);
+            document.getElementById('product-grid').innerHTML = paginatedItems.map(p => createCard(p)).join('');
+            lucide.createIcons();
+        }
+
+        async function loadHome() {
+            const games = (await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games')).slice(0, 4);
+            const subs = (await fetchCSV(STORE_CONFIG['ps_subs'].id, 'Subscriptions')).slice(0, 4);
+            document.getElementById('random-games-grid').innerHTML = games.map(p => createCard(p)).join('');
+            document.getElementById('random-subs-grid').innerHTML = subs.map(p => createCard(p)).join('');
+            lucide.createIcons();
+        }
+
+        function showPage(page) {
+            const home = document.getElementById('home-view');
+            const prod = document.getElementById('product-view');
+            if(page === 'home') {
+                home.classList.remove('hidden'); prod.classList.add('hidden');
+            } else {
+                home.classList.add('hidden'); prod.classList.remove('hidden');
+            }
+        }
+
+        window.onload = () => { loadHome(); lucide.createIcons(); };
+    </script>
 </body>
 </html>
