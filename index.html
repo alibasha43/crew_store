@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crew Store | Midgard Official</title>
+    <title>Crew Store | Official</title>
     <link rel="icon" type="image/png" href="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -12,8 +12,7 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            /* Update background to God of War Fjord/Frost forest landscape */
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1598188319692-74d1a0be53f4?q=80&w=2070');
+            background: linear-gradient(rgba(0,0,0,0.92), rgba(0,0,0,0.92)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
             background-size: cover; background-attachment: fixed; color: #fff; min-height: 100vh; margin: 0;
         }
 
@@ -67,20 +66,8 @@
         .page-dots { color: rgba(255,255,255,0.3); padding: 0 5px; }
         .page-btn.disabled { opacity: 0.3; cursor: not-allowed; }
 
-        /* Footer styling */
         footer a i { transition: 0.3s; }
         footer a:hover i { color: #fff; transform: scale(1.1); }
-        .footer-social-link {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
     </style>
 </head>
 <body>
@@ -130,28 +117,69 @@
     </nav>
 
     <div id="content" class="pt-32">
-        <div id="home-view" class="max-w-7xl mx-auto px-6 hidden home-page">
+        <div id="home-view" class="max-w-7xl mx-auto px-6">
             
-            <div class="flex flex-col items-center justify-center text-center p-16 mt-10">
-                <div class="relative group">
-                    <img src="https://www.image2url.com/r2/default/images/1776149740524-d842e3cb-674f-4898-b7a2-f2889c1657df.blob" 
-                         alt="God of War Kratos" 
-                         class="w-full max-w-2xl h-auto object-contain brightness-110 filter drop-shadow-[0_20px_60px_rgba(59,130,246,0.3)] transition-transform duration-700 group-hover:scale-105">
+            <section class="relative min-h-[90vh] flex items-center mb-20 overflow-hidden pt-10">
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute inset-0 opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+                    <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[150px]"></div>
+                    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[120px]"></div>
                 </div>
                 
-                <h1 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter brand-neon mb-6 mt-10">
-                    CREW<span class="text-blue-600">STORE</span>
-                </h1>
-                
-                <p class="text-gray-400 text-lg md:text-xl font-bold uppercase tracking-[0.5em] mb-12 max-w-xl">
-                    Premium Digital Gaming Assets
-                </p>
-                
-                <button onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})" 
-                        class="group relative px-10 py-5 bg-blue-600 text-white font-black uppercase tracking-tighter rounded-sm skew-x-[-12deg] hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                    <span class="inline-block skew-x-[12deg]">Explore Shop</span>
-                </button>
-            </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full relative z-10">
+                    <div class="flex flex-col items-center lg:items-start text-center lg:text-left">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="h-[1px] w-12 bg-blue-500"></div>
+                            <span class="text-blue-400 font-black uppercase tracking-[0.6em] text-[10px]">Realm of Digital Assets</span>
+                        </div>
+                        
+                        <h1 class="text-8xl md:text-[120px] font-black text-white uppercase tracking-tighter leading-[0.8] mb-6 italic">
+                            CREW<br>
+                            <span class="relative">
+                                STORE
+                                <span class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-transparent"></span>
+                            </span>
+                        </h1>
+                        
+                        <p class="text-gray-300 text-lg font-medium tracking-wide mb-10 max-w-md leading-relaxed border-l-2 border-white/10 pl-6">
+                            Forge your ultimate gaming library with premium accounts and subscriptions. The strength of a warrior, the price of a mortal.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                            <button onclick="document.getElementById('random-games-grid').scrollIntoView({behavior: 'smooth'})" 
+                                    class="group relative px-12 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-tighter transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+                                <span class="flex items-center gap-3">
+                                    Browse the Realms <i data-lucide="sword" class="w-5 h-5"></i>
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-16 grid grid-cols-3 gap-8 border-t border-white/5 pt-8 w-full max-w-sm">
+                            <div>
+                                <div class="text-blue-500 font-black text-xl">99%</div>
+                                <div class="text-[9px] uppercase tracking-widest text-gray-500">Security</div>
+                            </div>
+                            <div>
+                                <div class="text-blue-500 font-black text-xl">24/7</div>
+                                <div class="text-[9px] uppercase tracking-widest text-gray-500">Support</div>
+                            </div>
+                            <div>
+                                <div class="text-blue-500 font-black text-xl">Instant</div>
+                                <div class="text-[9px] uppercase tracking-widest text-gray-500">Delivery</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex justify-center items-center">
+                        <div class="absolute w-[350px] h-[350px] md:w-[600px] md:h-[600px] opacity-10 rotate-45 border-[20px] border-double border-white rounded-full"></div>
+                        <div class="relative z-20 group">
+                            <img src="https://www.image2url.com/r2/default/images/1776149740524-d842e3cb-674f-4898-b7a2-f2889c1657df.blob" 
+                                 alt="God of War Hero" 
+                                 class="w-full max-w-[550px] md:max-w-[750px] h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] transition-all duration-700 group-hover:scale-[1.02] group-hover:brightness-110">
+                        </div>
+                    </div>
+                </div>
+            </section>
             
             <section class="mb-20">
                 <h2 class="text-2xl font-black mb-8 uppercase italic border-l-4 border-blue-500 pl-4 text-blue-500 flex items-center gap-3">
@@ -175,7 +203,7 @@
             </section>
         </div>
 
-        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden product-page">
+        <div id="product-view" class="max-w-7xl mx-auto px-6 hidden">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
                 <h2 id="category-title" class="text-4xl font-black uppercase italic text-blue-500 flex items-center gap-4"></h2>
                 
@@ -187,7 +215,6 @@
             </div>
             
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16"></div>
-            
             <div id="pagination" class="pb-32"></div>
         </div>
     </div>
@@ -195,7 +222,6 @@
     <footer class="glass border-t border-white/10 py-16 mt-20">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start mb-16">
-                
                 <div class="flex flex-col items-center md:items-start gap-4">
                     <div class="flex items-center gap-3">
                         <img src="https://www.image2url.com/r2/default/images/1776077887655-81c34eec-f826-4982-abd4-e741de9067ad.png" alt="Logo" class="w-10 h-10 object-contain">
@@ -234,7 +260,7 @@
                 <p class="text-gray-600 text-[10px] uppercase tracking-[0.3em] font-bold">
                     COPYRIGHT © 2026 — <span class="text-blue-500">CREW STORE</span>
                 </p>
-                <img src="https://www.image2url.com/r2/default/images/1776085578612-04ffa0e2-458f-461a-8052-a3450a9fb86f.png" alt="Payments" class="h-16 md:h-20 w-auto object-contain brightness-110 transform translate-y-[-2px]">
+                <img src="https://www.image2url.com/r2/default/images/1776085578612-04ffa0e2-458f-461a-8052-a3450a9fb86f.png" alt="Payments" class="h-16 md:h-20 w-auto object-contain brightness-110">
             </div>
         </div>
     </footer>
@@ -271,7 +297,7 @@
             if (lines.length < 2) return [];
             const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
             return lines.slice(1).map(line => {
-                const values = line.split(/,(?=(?:Treating strings inside quotes like this: "[^"]*"$)/);
+                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 const row = {};
                 headers.forEach((h, i) => {
                     row[h] = values[i] ? values[i].replace(/"/g, '').trim() : "";
@@ -312,7 +338,6 @@
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const paginatedItems = currentData.slice(start, end);
-            
             document.getElementById('product-grid').innerHTML = paginatedItems.map(p => createCard(p)).join('');
             renderPagination();
             lucide.createIcons();
@@ -337,33 +362,25 @@
             const container = document.getElementById('pagination');
             container.innerHTML = '';
             if(pageCount <= 1) return;
-
             container.appendChild(createPageBtn(currentPage - 1, '<i data-lucide="chevron-left" class="w-4 h-4"></i>', false, currentPage === 1));
-
             const delta = 1; 
             const range = [];
             for (let i = 1; i <= pageCount; i++) {
-                if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) {
-                    range.push(i);
-                }
+                if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) range.push(i);
             }
-
             let l;
             for (let i of range) {
                 if (l) {
-                    if (i - l === 2) {
-                        container.appendChild(createPageBtn(l + 1, l + 1));
-                    } else if (i - l !== 1) {
+                    if (i - l === 2) container.appendChild(createPageBtn(l + 1, l + 1));
+                    else if (i - l !== 1) {
                         const dots = document.createElement('span');
-                        dots.innerText = '...';
-                        dots.className = 'page-dots';
+                        dots.innerText = '...'; dots.className = 'page-dots';
                         container.appendChild(dots);
                     }
                 }
                 container.appendChild(createPageBtn(i, i, i === currentPage));
                 l = i;
             }
-
             container.appendChild(createPageBtn(currentPage + 1, '<i data-lucide="chevron-right" class="w-4 h-4"></i>', false, currentPage === pageCount));
             lucide.createIcons();
         }
@@ -374,13 +391,9 @@
         }
 
         function sortItems(type) {
-            if(type === 'name') {
-                currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-            } else if(type === 'price-low') {
-                currentData.sort((a, b) => cleanPrice(a.price) - cleanPrice(b.price));
-            } else if(type === 'price-high') {
-                currentData.sort((a, b) => cleanPrice(b.price) - cleanPrice(a.price));
-            }
+            if(type === 'name') currentData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+            else if(type === 'price-low') currentData.sort((a, b) => cleanPrice(a.price) - cleanPrice(b.price));
+            else if(type === 'price-high') currentData.sort((a, b) => cleanPrice(b.price) - cleanPrice(a.price));
             currentPage = 1;
             renderGrid();
         }
@@ -389,7 +402,6 @@
             const games = (await fetchCSV(STORE_CONFIG['ps_games'].id, 'Games')).sort(() => 0.5 - Math.random()).slice(0, 4);
             const subs = (await fetchCSV(STORE_CONFIG['ps_subs'].id, 'Subscriptions')).sort(() => 0.5 - Math.random()).slice(0, 4);
             const cards = (await fetchCSV(STORE_CONFIG['ps_cards'].id, 'GiftCards')).sort(() => 0.5 - Math.random()).slice(0, 4);
-            
             document.getElementById('random-games-grid').innerHTML = games.map(p => createCard(p)).join('');
             document.getElementById('random-subs-grid').innerHTML = subs.map(p => createCard(p)).join('');
             document.getElementById('random-cards-grid').innerHTML = cards.map(p => createCard(p)).join('');
@@ -410,19 +422,16 @@
         function showPage(page) {
             const home = document.getElementById('home-view');
             const prod = document.getElementById('product-view');
-            
             if(page === 'home') {
                 home.classList.remove('hidden'); prod.classList.add('hidden');
                 loadHome();
             } else {
                 home.classList.add('hidden'); prod.classList.remove('hidden');
             }
-            lucide.createIcons();
+            setTimeout(() => lucide.createIcons(), 100);
         }
 
         window.onload = () => { 
-            // Correct the initial hidden state for home-view
-            document.getElementById('home-view').classList.remove('hidden');
             loadHome(); 
             lucide.createIcons(); 
         };
